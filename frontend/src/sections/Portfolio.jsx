@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const FILTERS = ['all', 'web', 'app', 'design'];
+const FILTERS = ['all', 'website', 'data', 'cloud'];
 
 export default function Portfolio() {
   const [projects, setProjects] = useState([]);
   const [filter, setFilter] = useState('all');
   const [loading, setLoading] = useState(true);
+  const [showAll, setShowAll] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch('http://localhost:5000/api/portfolio')
@@ -14,7 +17,14 @@ export default function Portfolio() {
       .catch(() => { setLoading(false); });
   }, []);
 
+  const handleFilter = (f) => {
+    setFilter(f);
+    setShowAll(false);
+  };
+
   const filtered = filter === 'all' ? projects : projects.filter(p => p.category === filter);
+  const displayed = showAll ? filtered : filtered.slice(0, 6);
+  const hasMore = filtered.length > 6;
 
   return (
     <section className="section portfolio-section" id="portfolio">
@@ -29,7 +39,7 @@ export default function Portfolio() {
         <div className="portfolio-filter">
           {FILTERS.map(f => (
             <button key={f} className={`filter-btn ${filter === f ? 'active' : ''}`}
-              onClick={() => setFilter(f)}>
+              onClick={() => handleFilter(f)}>
               {f.toUpperCase()}
             </button>
           ))}
@@ -39,32 +49,39 @@ export default function Portfolio() {
             LOADING QUESTS...
           </p>
         ) : (
-          <div className="portfolio-grid">
-            {filtered.map(p => (
-              <div className="project-card pixel-border" key={p.id}>
-                <div className="project-image">
-                  <div className="project-placeholder"
-                    style={{ background: `linear-gradient(135deg, ${p.color})` }}>
-                    <span className="placeholder-icon">{p.icon}</span>
+          <>
+            <div className="portfolio-grid">
+              {displayed.map(p => (
+                <div className="project-card pixel-border" key={p.id} onClick={() => navigate(`/portfolio/${p.id}`)} style={{ cursor: 'pointer' }}>
+                  <div className="project-image">
+                    <div className="project-placeholder"
+                      style={p.image ? { backgroundImage: `url(http://localhost:5000/uploads/${p.image})`, backgroundSize: 'cover', backgroundPosition: 'center' } : { background: `linear-gradient(135deg, ${p.color})` }}>
+                      {!p.image && <span className="placeholder-icon">{p.icon}</span>}
+                    </div>
+                    <div className="project-overlay"><span className="overlay-text">VIEW QUEST</span></div>
                   </div>
-                  <div className="project-overlay"><span className="overlay-text">VIEW QUEST</span></div>
+                  <div className="project-info">
+                    <div className="project-badge">{p.category.toUpperCase()}</div>
+                    <h3 className="project-title">{p.title}</h3>
+                    <p className="project-desc">{p.desc}</p>
+                    <div className="project-tech">
+                      {p.tech.map(t => <span className="tech-tag" key={t}>{t}</span>)}
+                    </div>
+                    <div className="project-links">
+                      <a href={p.demo} className="pixel-btn-sm" onClick={e => e.stopPropagation()}>DEMO</a>
+                      <a href={p.code} className="pixel-btn-sm" onClick={e => e.stopPropagation()}>CODE</a>
+                    </div>
+                  </div>
+                  <div className="project-xp">+{p.xp} XP</div>
                 </div>
-                <div className="project-info">
-                  <div className="project-badge">{p.category.toUpperCase()}</div>
-                  <h3 className="project-title">{p.title}</h3>
-                  <p className="project-desc">{p.desc}</p>
-                  <div className="project-tech">
-                    {p.tech.map(t => <span className="tech-tag" key={t}>{t}</span>)}
-                  </div>
-                  <div className="project-links">
-                    <a href={p.demo} className="pixel-btn-sm">DEMO</a>
-                    <a href={p.code} className="pixel-btn-sm">CODE</a>
-                  </div>
-                </div>
-                <div className="project-xp">+{p.xp} XP</div>
+              ))}
+            </div>
+            {!showAll && hasMore && (
+              <div style={{ textAlign: 'center', marginTop: '3rem' }}>
+                <button className="pixel-btn" onClick={() => setShowAll(true)}>SHOW ALL ➔</button>
               </div>
-            ))}
-          </div>
+            )}
+          </>
         )}
       </div>
     </section>

@@ -1,43 +1,126 @@
 const express = require('express');
 const cors = require('cors');
-require('dotenv').config();
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
+const multer = require('multer');
+const path = require('path');
+const pool = require('./db');
+require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.use(cors({ origin: 'http://localhost:5173' }));
 app.use(express.json());
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// ── Data ──────────────────────────────────────────────
-const portfolioData = [
-  { id: 1, category: 'web',    icon: '🌐', color: '#ff6b9d, #c44569', title: 'E-Commerce Platform',    desc: 'A full-featured online store with pixel-perfect design.',       tech: ['React', 'Node.js', 'MongoDB'],          xp: 500, demo: '#', code: '#' },
-  { id: 2, category: 'app',    icon: '📱', color: '#4ecdc4, #2d9b93', title: 'Task Manager App',        desc: 'A productivity app to manage daily quests and track progress.',  tech: ['Flutter', 'Firebase', 'Dart'],           xp: 400, demo: '#', code: '#' },
-  { id: 3, category: 'design', icon: '🎨', color: '#a55eea, #6c5ce7', title: 'Brand Identity Kit',      desc: 'Complete branding package with logo and visual guidelines.',     tech: ['Figma', 'Illustrator', 'Photoshop'],     xp: 350, demo: '#', code: '#' },
-  { id: 4, category: 'web',    icon: '📊', color: '#f7d794, #f19066', title: 'Analytics Dashboard',     desc: 'Real-time data visualization with interactive charts.',           tech: ['Vue.js', 'D3.js', 'Python'],             xp: 450, demo: '#', code: '#' },
-  { id: 5, category: 'app',    icon: '🎮', color: '#6a89cc, #4a69bd', title: 'Pixel RPG Game',          desc: 'A retro-style RPG game with pixel art and epic quests.',          tech: ['Unity', 'C#', 'Aseprite'],              xp: 600, demo: '#', code: '#' },
-  { id: 6, category: 'design', icon: '✨', color: '#e77f67, #cf6a87', title: 'UI Component Library',    desc: 'Reusable pixel-themed UI components for modern web apps.',        tech: ['Storybook', 'CSS', 'React'],             xp: 300, demo: '#', code: '#' },
-];
+// ── Multer Configuration ───────────────────────────────
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => cb(null, 'uploads/'),
+  filename: (req, file, cb) => cb(null, Date.now() + path.extname(file.originalname))
+});
+const upload = multer({ storage });
 
-const activitiesData = [
-  { id: 1, year: '2024', icon: '🎓', title: '🏅 Graduated with Honors',    desc: 'Completed Computer Science degree with flying colors!',          xp: 1000, badge: 'SCHOLAR' },
-  { id: 2, year: '2024', icon: '🏆', title: '🥇 Hackathon Champion',        desc: 'Won first place at a national hackathon in 48 hours.',          xp: 800,  badge: 'CHAMPION' },
-  { id: 3, year: '2023', icon: '💼', title: '🚀 Internship at Tech Corp',   desc: 'Gained real-world experience on production-grade apps.',        xp: 600,  badge: 'INTERN' },
-  { id: 4, year: '2023', icon: '🎤', title: '🎙️ Tech Conference Speaker',  desc: 'Presented a talk on modern web technologies.',                 xp: 500,  badge: 'SPEAKER' },
-  { id: 5, year: '2022', icon: '🌟', title: '💻 Open Source Contributor',  desc: 'Active contributor with 100+ merged pull requests.',            xp: 700,  badge: 'CONTRIBUTOR' },
-  { id: 6, year: '2022', icon: '📜', title: '📝 Published Tech Article',   desc: 'Wrote an article that gained 10k+ readers.',                   xp: 400,  badge: 'WRITER' },
-];
+// ── Auth Middleware ────────────────────────────────────
+function verifyToken(req, res, next) {
+  const token = req.headers['authorization'];
+  if (!token) return res.status(403).json({ success: false, message: 'No token provided' });
 
-// ── Routes ─────────────────────────────────────────────
-app.get('/api/portfolio', (req, res) => {
-  const { category } = req.query;
-  const data = category && category !== 'all'
-    ? portfolioData.filter(p => p.category === category)
-    : portfolioData;
-  res.json({ success: true, data });
+  jwt.verify(token.split(' ')[1], process.env.JWT_SECRET, (err, decoded) => {
+    if (err) return res.status(401).json({ success: false, message: 'Unauthorized' });
+    req.userId = decoded.id;
+    next();
+  });
+}
+
+// ── Auth Routes ────────────────────────────────────────
+app.post('/api/auth/login', async (req, res) => {
+  try {
+    const { username, password } = req.body;
+    const [users] = await pool.query('SELECT * FROM users WHERE username = ?', [username]);
+    if (users.length === 0) return res.status(404).json({ success: false, message: 'User not found' });
+
+    const user = users[0];
+    const passwordIsValid = await bcrypt.compare(password, user.password);
+    if (!passwordIsValid) return res.status(401).json({ success: false, message: 'Invalid password' });
+
+    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: 86400 }); // 24 hours
+    res.json({ success: true, token });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
 });
 
-app.get('/api/activities', (req, res) => {
-  res.json({ success: true, data: activitiesData });
+app.get('/api/auth/verify', verifyToken, (req, res) => {
+  res.json({ success: true, message: 'Token is valid' });
+});
+
+// ── Public Routes (Read-Only) ──────────────────────────
+app.get('/api/portfolio', async (req, res) => {
+  try {
+    const { category } = req.query;
+    let query = 'SELECT * FROM portfolio';
+    let params = [];
+    if (category && category !== 'all') {
+      query += ' WHERE category = ?';
+      params.push(category);
+    }
+    const [data] = await pool.query(query, params);
+    
+    // Parse tech string to array for frontend compatibility
+    const formattedData = data.map(item => ({
+      ...item,
+      tech: item.tech ? item.tech.split(',').map(t => t.trim()) : []
+    }));
+    
+    res.json({ success: true, data: formattedData });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+app.get('/api/portfolio/:id', async (req, res) => {
+  try {
+    const [data] = await pool.query('SELECT * FROM portfolio WHERE id = ?', [req.params.id]);
+    if (data.length === 0) return res.status(404).json({ success: false, message: 'Quest not found' });
+    
+    const item = data[0];
+    item.tech = item.tech ? item.tech.split(',').map(t => t.trim()) : [];
+    res.json({ success: true, data: item });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+app.get('/api/activities', async (req, res) => {
+  try {
+    const [data] = await pool.query('SELECT * FROM activities ORDER BY year DESC, id DESC');
+    res.json({ success: true, data });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+app.get('/api/activities/:id', async (req, res) => {
+  try {
+    const [data] = await pool.query('SELECT * FROM activities WHERE id = ?', [req.params.id]);
+    if (data.length === 0) return res.status(404).json({ success: false, message: 'Achievement not found' });
+    res.json({ success: true, data: data[0] });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+app.get('/api/stats', async (req, res) => {
+  try {
+    const [portData] = await pool.query('SELECT IFNULL(SUM(xp),0) as totalXp, COUNT(*) as count FROM portfolio');
+    const [actData] = await pool.query('SELECT IFNULL(SUM(xp),0) as totalXp FROM activities');
+    
+    const totalXp = Number(portData[0].totalXp) + Number(actData[0].totalXp);
+    res.json({ success: true, data: { totalXp, quests: portData[0].count, level: Math.floor(totalXp / 400) } });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
 });
 
 app.post('/api/contact', (req, res) => {
@@ -45,16 +128,86 @@ app.post('/api/contact', (req, res) => {
   if (!name || !email || !subject || !message) {
     return res.status(400).json({ success: false, message: 'All fields are required.' });
   }
-  // In production, send email via nodemailer here
   console.log('📨 New message from:', name, email);
-  console.log('Subject:', subject);
-  console.log('Message:', message);
   res.json({ success: true, message: 'Message received! Quest accepted! +100 XP' });
 });
 
-app.get('/api/stats', (req, res) => {
-  const totalXp = [...portfolioData, ...activitiesData].reduce((s, i) => s + i.xp, 0);
-  res.json({ success: true, data: { totalXp, quests: portfolioData.length, level: Math.floor(totalXp / 400) } });
+// ── Admin Protected Routes (CRUD) ──────────────────────
+
+// Portfolio
+app.post('/api/portfolio', verifyToken, upload.single('image'), async (req, res) => {
+  try {
+    const { category, icon, color, title, desc, tech, xp, demo, code } = req.body;
+    const image = req.file ? req.file.filename : null;
+    await pool.query(
+      'INSERT INTO portfolio (category, icon, color, title, `desc`, tech, xp, demo, code, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+      [category, icon, color, title, desc, tech, xp, demo, code, image]
+    );
+    res.json({ success: true, message: 'Quest added successfully' });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+app.put('/api/portfolio/:id', verifyToken, upload.single('image'), async (req, res) => {
+  try {
+    const { category, icon, color, title, desc, tech, xp, demo, code } = req.body;
+    const image = req.file ? req.file.filename : req.body.existingImage;
+    await pool.query(
+      'UPDATE portfolio SET category=?, icon=?, color=?, title=?, `desc`=?, tech=?, xp=?, demo=?, code=?, image=? WHERE id=?',
+      [category, icon, color, title, desc, tech, xp, demo, code, image, req.params.id]
+    );
+    res.json({ success: true, message: 'Quest updated successfully' });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+app.delete('/api/portfolio/:id', verifyToken, async (req, res) => {
+  try {
+    await pool.query('DELETE FROM portfolio WHERE id = ?', [req.params.id]);
+    res.json({ success: true, message: 'Quest deleted successfully' });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+// Activities
+app.post('/api/activities', verifyToken, upload.single('image'), async (req, res) => {
+  try {
+    const { year, icon, title, desc, xp, badge } = req.body;
+    const image = req.file ? req.file.filename : null;
+    await pool.query(
+      'INSERT INTO activities (year, icon, title, `desc`, xp, badge, image) VALUES (?, ?, ?, ?, ?, ?, ?)',
+      [year, icon, title, desc, xp, badge, image]
+    );
+    res.json({ success: true, message: 'Achievement added successfully' });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+app.put('/api/activities/:id', verifyToken, upload.single('image'), async (req, res) => {
+  try {
+    const { year, icon, title, desc, xp, badge } = req.body;
+    const image = req.file ? req.file.filename : req.body.existingImage;
+    await pool.query(
+      'UPDATE activities SET year=?, icon=?, title=?, `desc`=?, xp=?, badge=?, image=? WHERE id=?',
+      [year, icon, title, desc, xp, badge, image, req.params.id]
+    );
+    res.json({ success: true, message: 'Achievement updated successfully' });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+app.delete('/api/activities/:id', verifyToken, async (req, res) => {
+  try {
+    await pool.query('DELETE FROM activities WHERE id = ?', [req.params.id]);
+    res.json({ success: true, message: 'Achievement deleted successfully' });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
 });
 
 app.listen(PORT, () => console.log(`🎮 Pixel Quest server running on http://localhost:${PORT}`));

@@ -1,8 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function Activities({ showToast }) {
   const [items, setItems] = useState([]);
   const refs = useRef([]);
+  const gridRef = useRef(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch('http://localhost:5000/api/activities')
@@ -17,14 +20,20 @@ export default function Activities({ showToast }) {
       entries.forEach(e => {
         if (e.isIntersecting) {
           e.target.classList.add('visible');
-          const badge = e.target.querySelector('.badge-achievement');
-          if (badge && showToast) showToast(badge.textContent.replace('🏆 ',''));
         }
       });
     }, { threshold: 0.3 });
     refs.current.forEach(el => el && obs.observe(el));
     return () => obs.disconnect();
-  }, [items, showToast]);
+  }, [items]);
+
+  const scrollLeft = () => {
+    if (gridRef.current) gridRef.current.scrollBy({ left: -340, behavior: 'smooth' });
+  };
+
+  const scrollRight = () => {
+    if (gridRef.current) gridRef.current.scrollBy({ left: 340, behavior: 'smooth' });
+  };
 
   return (
     <section className="section activities-section" id="activities">
@@ -36,23 +45,37 @@ export default function Activities({ showToast }) {
           <div className="title-underline" />
           <p className="section-subtitle">— ACHIEVEMENT LOG —</p>
         </div>
-        <div className="activities-timeline">
-          {items.map((act, i) => (
-            <div className="timeline-item" key={act.id} ref={el => refs.current[i] = el}>
-              <div className="timeline-marker">
-                <span>{act.icon}</span>
-              </div>
-              <div className="timeline-content pixel-border">
-                <div className="timeline-date pixel-border-sm">{act.year}</div>
-                <h3 className="timeline-title">{act.title}</h3>
-                <p className="timeline-desc">{act.desc}</p>
-                <div className="timeline-badge">
+        
+        <div className="carousel-wrapper">
+          <button className="carousel-btn left" onClick={scrollLeft}>{'<'}</button>
+          
+          <div className="activities-grid" ref={gridRef}>
+            {items.slice(0, 6).map((act, i) => (
+              <div className="activity-card pixel-border" key={act.id} ref={el => refs.current[i] = el} onClick={() => navigate(`/activities/${act.id}`)}>
+                <div className="activity-header">
+                  <div className="activity-icon">
+                    <span>{act.icon}</span>
+                  </div>
+                  <div className="activity-date pixel-border-sm">{act.year}</div>
+                </div>
+                <h3 className="activity-title">{act.title}</h3>
+                {act.image && (
+                  <img src={`http://localhost:5000/uploads/${act.image}`} alt={act.title} style={{ width: '100%', height: '160px', objectFit: 'cover', marginBottom: '1rem', border: '2px solid var(--text-dim)' }} />
+                )}
+                <p className="activity-desc">{act.desc}</p>
+                <div className="activity-badges">
                   <span className="badge-xp">+{act.xp} XP</span>
                   <span className="badge-achievement">🏆 {act.badge}</span>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
+          
+          <button className="carousel-btn right" onClick={scrollRight}>{'>'}</button>
+        </div>
+
+        <div style={{ textAlign: 'center', marginTop: '3rem' }}>
+          <button className="pixel-btn" onClick={() => navigate('/activities')}>SHOW ALL ➔</button>
         </div>
       </div>
     </section>
