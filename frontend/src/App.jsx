@@ -14,7 +14,9 @@ import ActivityDetail from './pages/ActivityDetail';
 import AllActivities from './pages/AllActivities';
 import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
+import Shop from './pages/Shop';
 import PixelCursor from './components/PixelCursor';
+import FloatingShop from './components/FloatingShop';
 
 function Home({ showToast }) {
   return (
@@ -53,7 +55,9 @@ export default function App() {
         <Route path="/activities" element={<AllActivities />} />
         <Route path="/admin" element={<AdminLogin />} />
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
+        <Route path="/shop" element={<Shop />} />
       </Routes>
+      <FloatingShop />
       <Footer />
       <AchievementToast show={toast.show} text={toast.text} />
     </>

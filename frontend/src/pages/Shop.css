@@ -1,0 +1,70 @@
+.shop-page {
+  min-height: 100vh;
+  padding-bottom: 5rem;
+}
+
+.shop-intro {
+  font-family: var(--font-vt);
+  font-size: 1.4rem;
+  color: var(--text-dim);
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.product-card {
+  background: rgba(15, 15, 46, 0.8);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-10px);
+  background: rgba(26, 188, 156, 0.1);
+}
+
+.product-icon {
+  font-size: 3rem;
+  margin-bottom: 1.5rem;
+}
+
+.product-name {
+  font-family: var(--font-pixel);
+  font-size: 1rem;
+  color: var(--primary);
+  margin-bottom: 1rem;
+}
+
+.product-desc {
+  font-family: var(--font-vt);
+  font-size: 1.2rem;
+  color: var(--text-dim);
+  line-height: 1.5;
+  margin-bottom: 2rem;
+  flex-grow: 1;
+}
+
+.product-footer {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--bg2);
+  padding-top: 1.5rem;
+}
+
+.product-price {
+  font-family: var(--font-pixel);
+  font-size: 1.2rem;
+  color: var(--accent);
+}

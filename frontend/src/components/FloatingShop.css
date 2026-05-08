@@ -1,0 +1,78 @@
+.floating-shop-container {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 1000;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.floating-shop-container:hover {
+  transform: scale(1.1) translateY(-5px);
+}
+
+.floating-shop-bubble {
+  position: relative;
+  background: rgba(26, 188, 156, 0.8);
+  backdrop-filter: blur(10px);
+  padding: 0.8rem 1.2rem;
+  border-radius: 50px;
+  border: 2px solid var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(255, 255, 255, 0.2);
+  animation: floatBubble 4s ease-in-out infinite;
+  overflow: hidden;
+}
+
+.shop-icon {
+  font-size: 1.5rem;
+}
+
+.shop-text {
+  font-family: var(--font-pixel);
+  font-size: 0.6rem;
+  color: #fff;
+  letter-spacing: 1px;
+  white-space: nowrap;
+}
+
+.bubble-reflection {
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  width: 30%;
+  height: 20%;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  filter: blur(2px);
+  transform: rotate(-30deg);
+}
+
+@keyframes floatBubble {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .floating-shop-container {
+    bottom: 1.5rem;
+    right: 1.5rem;
+  }
+  
+  .shop-text {
+    display: none;
+  }
+  
+  .floating-shop-bubble {
+    padding: 0.8rem;
+    border-radius: 50%;
+  }
+}
