@@ -38,7 +38,7 @@ export default function AdminDashboard() {
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm('Delete this item?')) return;
+    // Note: window.confirm removed because some browsers block it
     try {
       const res = await fetch(`${API_URL}/api/${tab}/${id}`, {
         method: 'DELETE',
