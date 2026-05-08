@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import API_URL from '../config';
 
 const socials = [
   { icon: '📧', label: 'EMAIL',    value: 'hello@example.com', href: 'mailto:hello@example.com' },
@@ -19,7 +20,7 @@ export default function Contact({ showToast }) {
     e.preventDefault();
     setLoading(true); setError('');
     try {
-      const res = await fetch('http://localhost:5000/api/contact', {
+      const res = await fetch(`${API_URL}/api/contact`, {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
       });

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import API_URL from '../config';
 
 export default function Activities({ showToast }) {
   const [items, setItems] = useState([]);
@@ -8,7 +9,7 @@ export default function Activities({ showToast }) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/activities')
+    fetch(`${API_URL}/api/activities`)
       .then(r => r.json())
       .then(({ data }) => setItems(data))
       .catch(() => {});
@@ -60,7 +61,7 @@ export default function Activities({ showToast }) {
                 </div>
                 <h3 className="activity-title">{act.title}</h3>
                 {act.image && (
-                  <img src={`http://localhost:5000/uploads/${act.image}`} alt={act.title} style={{ width: '100%', height: '160px', objectFit: 'cover', marginBottom: '1rem', border: '2px solid var(--text-dim)' }} />
+                  <img src={act.image.startsWith('http') ? act.image : `${API_URL}/uploads/${act.image}`} alt={act.title} style={{ width: '100%', height: '160px', objectFit: 'cover', marginBottom: '1rem', border: '2px solid var(--text-dim)' }} />
                 )}
                 <p className="activity-desc">{act.desc}</p>
                 <div className="activity-badges">

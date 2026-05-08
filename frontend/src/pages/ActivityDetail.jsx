@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import API_URL from '../config';
 
 export default function ActivityDetail() {
   const { id } = useParams();
@@ -9,7 +10,7 @@ export default function ActivityDetail() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    fetch(`http://localhost:5000/api/activities/${id}`)
+    fetch(`${API_URL}/api/activities/${id}`)
       .then(r => r.json())
       .then(({ success, data }) => {
         if (success) setActivity(data);
@@ -49,7 +50,7 @@ export default function ActivityDetail() {
           
           <h1 style={{ fontFamily: 'var(--font-pixel)', fontSize: '1.4rem', color: 'var(--text)', marginBottom: '1.5rem' }}>{activity.title}</h1>
           {activity.image && (
-            <img src={`http://localhost:5000/uploads/${activity.image}`} alt={activity.title} style={{ width: '100%', maxWidth: '500px', height: 'auto', objectFit: 'cover', margin: '0 auto 2rem', display: 'block', border: '4px solid var(--bg)', boxShadow: '0 0 0 2px var(--secondary)' }} />
+            <img src={activity.image.startsWith('http') ? activity.image : `${API_URL}/uploads/${activity.image}`} alt={activity.title} style={{ width: '100%', maxWidth: '500px', height: 'auto', objectFit: 'cover', margin: '0 auto 2rem', display: 'block', border: '4px solid var(--bg)', boxShadow: '0 0 0 2px var(--secondary)' }} />
           )}
           <p style={{ fontFamily: 'var(--font-vt)', fontSize: '1.8rem', color: 'var(--text-dim)', maxWidth: '600px', margin: '0 auto 3rem', lineHeight: '1.6' }}>{activity.desc}</p>
           

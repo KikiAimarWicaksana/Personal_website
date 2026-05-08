@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import API_URL from '../config';
 
 export default function PortfolioDetail() {
   const { id } = useParams();
@@ -9,7 +10,7 @@ export default function PortfolioDetail() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    fetch(`http://localhost:5000/api/portfolio/${id}`)
+    fetch(`${API_URL}/api/portfolio/${id}`)
       .then(r => r.json())
       .then(({ success, data }) => {
         if (success) setProject(data);
@@ -51,7 +52,7 @@ export default function PortfolioDetail() {
           </div>
           
           <div className="project-image pixel-border-sm" style={{ height: '400px', marginBottom: '2rem' }}>
-            <div className="project-placeholder" style={project.image ? { backgroundImage: `url(http://localhost:5000/uploads/${project.image})`, backgroundSize: 'cover', backgroundPosition: 'center', height: '100%' } : { background: `linear-gradient(135deg, ${project.color})`, height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <div className="project-placeholder" style={project.image ? { backgroundImage: `url(${project.image.startsWith('http') ? project.image : `${API_URL}/uploads/${project.image}`})`, backgroundSize: 'cover', backgroundPosition: 'center', height: '100%' } : { background: `linear-gradient(135deg, ${project.color})`, height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               {!project.image && <span style={{ fontSize: '6rem' }}>{project.icon}</span>}
             </div>
           </div>

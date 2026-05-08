@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import API_URL from '../config';
+
 const FILTERS = ['all', 'website', 'data', 'cloud'];
 
 export default function Portfolio() {
@@ -11,7 +13,7 @@ export default function Portfolio() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/portfolio')
+    fetch(`${API_URL}/api/portfolio`)
       .then(r => r.json())
       .then(({ data }) => { setProjects(data); setLoading(false); })
       .catch(() => { setLoading(false); });
@@ -55,7 +57,7 @@ export default function Portfolio() {
                 <div className="project-card pixel-border" key={p.id} onClick={() => navigate(`/portfolio/${p.id}`)} style={{ cursor: 'pointer' }}>
                   <div className="project-image">
                     <div className="project-placeholder"
-                      style={p.image ? { backgroundImage: `url(http://localhost:5000/uploads/${p.image})`, backgroundSize: 'cover', backgroundPosition: 'center' } : { background: `linear-gradient(135deg, ${p.color})` }}>
+                      style={p.image ? { backgroundImage: `url(${p.image.startsWith('http') ? p.image : `${API_URL}/uploads/${p.image}`})`, backgroundSize: 'cover', backgroundPosition: 'center' } : { background: `linear-gradient(135deg, ${p.color})` }}>
                       {!p.image && <span className="placeholder-icon">{p.icon}</span>}
                     </div>
                     <div className="project-overlay"><span className="overlay-text">VIEW QUEST</span></div>

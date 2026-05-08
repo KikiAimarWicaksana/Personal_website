@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
+import API_URL from '../config';
 
 export default function Footer() {
   const [stats, setStats] = useState({ totalXp: 0, quests: 0, level: 0 });
   const [displayed, setDisplayed] = useState({ totalXp: 0, quests: 0, level: 0 });
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/stats')
+    fetch(`${API_URL}/api/stats`)
       .then(r => r.json())
       .then(({ data }) => setStats(data))
       .catch(() => setStats({ totalXp: 4850, quests: 6, level: 12 }));

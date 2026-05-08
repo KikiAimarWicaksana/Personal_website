@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import API_URL from '../config';
 
 export default function AdminDashboard() {
   const navigate = useNavigate();
@@ -27,7 +28,7 @@ export default function AdminDashboard() {
     setLoading(true);
     try {
       const endpoint = tab === 'portfolio' ? '/api/portfolio' : '/api/activities';
-      const res = await fetch(`http://localhost:5000${endpoint}`);
+      const res = await fetch(`${API_URL}${endpoint}`);
       const data = await res.json();
       setItems(data.data || []);
     } catch (err) {
@@ -39,7 +40,7 @@ export default function AdminDashboard() {
   const handleDelete = async (id) => {
     if (!window.confirm('Delete this item?')) return;
     try {
-      await fetch(`http://localhost:5000/api/${tab}/${id}`, {
+      await fetch(`${API_URL}/api/${tab}/${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       });
@@ -56,7 +57,7 @@ export default function AdminDashboard() {
       Object.keys(portForm).forEach(key => formData.append(key, portForm[key]));
       if (portImage) formData.append('image', portImage);
 
-      await fetch('http://localhost:5000/api/portfolio', {
+      await fetch(`${API_URL}/api/portfolio`, {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}` },
         body: formData
@@ -78,7 +79,7 @@ export default function AdminDashboard() {
       Object.keys(actForm).forEach(key => formData.append(key, actForm[key]));
       if (actImage) formData.append('image', actImage);
 
-      await fetch('http://localhost:5000/api/activities', {
+      await fetch(`${API_URL}/api/activities`, {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}` },
         body: formData

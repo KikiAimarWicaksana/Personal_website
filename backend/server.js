@@ -4,20 +4,47 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const multer = require('multer');
 const path = require('path');
+const cloudinary = require('cloudinary').v2;
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
 const pool = require('./db');
 require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-app.use(cors({ origin: 'http://localhost:5173' }));
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://kikiaimar.vercel.app', // Ganti dengan domain Vercel Anda nanti
+  'https://kikiaimar.com'        // Jika ada domain custom
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true
+}));
 app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// ── Multer Configuration ───────────────────────────────
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, 'uploads/'),
-  filename: (req, file, cb) => cb(null, Date.now() + path.extname(file.originalname))
+// ── Cloudinary Configuration ───────────────────────────
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
+});
+
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: 'pixel_quest',
+    allowed_formats: ['jpg', 'png', 'jpeg', 'webp'],
+    transformation: [{ width: 1000, crop: 'limit' }]
+  },
 });
 const upload = multer({ storage });
 
@@ -138,7 +165,7 @@ app.post('/api/contact', (req, res) => {
 app.post('/api/portfolio', verifyToken, upload.single('image'), async (req, res) => {
   try {
     const { category, icon, color, title, desc, tech, xp, demo, code } = req.body;
-    const image = req.file ? req.file.filename : null;
+    const image = req.file ? req.file.path : null;
     await pool.query(
       'INSERT INTO portfolio (category, icon, color, title, `desc`, tech, xp, demo, code, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
       [category, icon, color, title, desc, tech, xp, demo, code, image]
@@ -152,7 +179,7 @@ app.post('/api/portfolio', verifyToken, upload.single('image'), async (req, res)
 app.put('/api/portfolio/:id', verifyToken, upload.single('image'), async (req, res) => {
   try {
     const { category, icon, color, title, desc, tech, xp, demo, code } = req.body;
-    const image = req.file ? req.file.filename : req.body.existingImage;
+    const image = req.file ? req.file.path : req.body.existingImage;
     await pool.query(
       'UPDATE portfolio SET category=?, icon=?, color=?, title=?, `desc`=?, tech=?, xp=?, demo=?, code=?, image=? WHERE id=?',
       [category, icon, color, title, desc, tech, xp, demo, code, image, req.params.id]
@@ -176,7 +203,7 @@ app.delete('/api/portfolio/:id', verifyToken, async (req, res) => {
 app.post('/api/activities', verifyToken, upload.single('image'), async (req, res) => {
   try {
     const { year, icon, title, desc, xp, badge } = req.body;
-    const image = req.file ? req.file.filename : null;
+    const image = req.file ? req.file.path : null;
     await pool.query(
       'INSERT INTO activities (year, icon, title, `desc`, xp, badge, image) VALUES (?, ?, ?, ?, ?, ?, ?)',
       [year, icon, title, desc, xp, badge, image]
@@ -190,7 +217,7 @@ app.post('/api/activities', verifyToken, upload.single('image'), async (req, res
 app.put('/api/activities/:id', verifyToken, upload.single('image'), async (req, res) => {
   try {
     const { year, icon, title, desc, xp, badge } = req.body;
-    const image = req.file ? req.file.filename : req.body.existingImage;
+    const image = req.file ? req.file.path : req.body.existingImage;
     await pool.query(
       'UPDATE activities SET year=?, icon=?, title=?, `desc`=?, xp=?, badge=?, image=? WHERE id=?',
       [year, icon, title, desc, xp, badge, image, req.params.id]
