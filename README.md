@@ -4,7 +4,7 @@
   <img src="frontend/public/profile.jpeg" alt="Logo" width="120" style="border-radius: 50%">
   <h3>Kiki Aimar Wicaksana</h3>
   <p>Data Engineer | Cloud & Data Enthusiast</p>
-  <a href="https://kikiaimarwicaksana.vercel.app"><strong>View Live Website »</strong></a>
+  <a href="https://aimar.my.id"><strong>View Live Website »</strong></a>
 </div>
 
 ---
