@@ -14,7 +14,7 @@ const PORT = process.env.PORT || 5000;
 
 const allowedOrigins = [
   'http://localhost:5173',
-  'https://kikiaimar.vercel.app', // Ganti dengan domain Vercel Anda nanti
+  'personal-website-atr7.vercel.app', // Ganti dengan domain Vercel Anda nanti
   'https://kikiaimar.com'        // Jika ada domain custom
 ];
 
@@ -93,13 +93,13 @@ app.get('/api/portfolio', async (req, res) => {
       params.push(category);
     }
     const [data] = await pool.query(query, params);
-    
+
     // Parse tech string to array for frontend compatibility
     const formattedData = data.map(item => ({
       ...item,
       tech: item.tech ? item.tech.split(',').map(t => t.trim()) : []
     }));
-    
+
     res.json({ success: true, data: formattedData });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
@@ -110,7 +110,7 @@ app.get('/api/portfolio/:id', async (req, res) => {
   try {
     const [data] = await pool.query('SELECT * FROM portfolio WHERE id = ?', [req.params.id]);
     if (data.length === 0) return res.status(404).json({ success: false, message: 'Quest not found' });
-    
+
     const item = data[0];
     item.tech = item.tech ? item.tech.split(',').map(t => t.trim()) : [];
     res.json({ success: true, data: item });
@@ -142,7 +142,7 @@ app.get('/api/stats', async (req, res) => {
   try {
     const [portData] = await pool.query('SELECT IFNULL(SUM(xp),0) as totalXp, COUNT(*) as count FROM portfolio');
     const [actData] = await pool.query('SELECT IFNULL(SUM(xp),0) as totalXp FROM activities');
-    
+
     const totalXp = Number(portData[0].totalXp) + Number(actData[0].totalXp);
     res.json({ success: true, data: { totalXp, quests: portData[0].count, level: Math.floor(totalXp / 400) } });
   } catch (err) {
