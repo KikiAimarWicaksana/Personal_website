@@ -1,14 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 
 const skills = [
-  { icon: '🌐', name: 'HTML/CSS', level: 95 },
-  { icon: '⚡', name: 'JavaScript', level: 90 },
-  { icon: '⚛️', name: 'React', level: 85 },
-  { icon: '🟢', name: 'Node.js', level: 80 },
-  { icon: '🐍', name: 'Python', level: 85 },
-  { icon: '🎨', name: 'UI/UX', level: 70 },
-  { icon: '🗄️', name: 'Database', level: 80 },
-  { icon: '☁️', name: 'Cloud', level: 75 },
+  { icon: '🐍', name: 'Python', level: 90 },
+  { icon: '📊', name: 'SQL & BigQuery', level: 95 },
+  { icon: '☁️', name: 'Google Cloud (GCP)', level: 85 },
+  { icon: '☕', name: 'Java', level: 75 },
+  { icon: '⚡', name: 'Data Pipelines', level: 80 },
+  { icon: '🗄️', name: 'Data Warehousing', level: 85 },
+  { icon: '⚙️', name: 'ETL / ELT', level: 80 },
+  { icon: '🐘', name: 'Spark / Big Data', level: 70 },
 ];
 
 const stats = [
