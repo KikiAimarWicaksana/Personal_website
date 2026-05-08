@@ -13,6 +13,7 @@ export default function AdminLogin() {
     setError('');
     
     try {
+      console.log('🚀 Attempting login to:', `${API_URL}/api/auth/login`);
       const res = await fetch(`${API_URL}/api/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -27,7 +28,8 @@ export default function AdminLogin() {
         setError(data.message || 'Login failed');
       }
     } catch (err) {
-      setError('Server error');
+      console.error('Login error details:', err);
+      setError(`Connection error: ${err.message}. Please check if the API URL is correct.`);
     }
   };
 

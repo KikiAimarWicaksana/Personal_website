@@ -37,3 +37,4 @@ backend/uploads/
 
 # Frontend build
 frontend/dist/
+.vercel

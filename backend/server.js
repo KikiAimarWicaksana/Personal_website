@@ -6,7 +6,6 @@ const multer = require('multer');
 const path = require('path');
 const cloudinary = require('cloudinary').v2;
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
-require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 const pool = require('./db');
 
 const app = express();
@@ -15,14 +14,23 @@ const PORT = process.env.PORT || 5000;
 const allowedOrigins = [
   'http://localhost:5173',
   'https://kikiaimarwicaksana.vercel.app',
-  'https://kikiaimar.com'
+  'https://kikiaimar.com',
+  'https://aimar.my.id',
+  'https://www.aimar.my.id'
 ];
 
 app.use(cors({
   origin: function (origin, callback) {
-    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    
+    const isAllowed = allowedOrigins.indexOf(origin) !== -1 || 
+                     origin.endsWith('aimar.my.id');
+
+    if (isAllowed) {
       callback(null, true);
     } else {
+      console.log('❌ CORS Blocked origin:', origin);
       callback(new Error('Not allowed by CORS'));
     }
   },
