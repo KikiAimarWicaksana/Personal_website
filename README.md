@@ -1,7 +1,7 @@
 # 🎮 Pixel Quest - Personal Portfolio
 
 <div align="center">
-  <img src="https://kikiaimarwicaksana.vercel.app/profile.jpeg" alt="Logo" width="120" style="border-radius: 50%">
+  <img src="https://aimar.my.id/profile.jpeg" alt="Logo" width="120" style="border-radius: 50%">
   <h3>Kiki Aimar Wicaksana</h3>
   <p>Data Engineer | Cloud & Data Enthusiast</p>
   <a href="https://kikiaimarwicaksana.vercel.app"><strong>View Live Website »</strong></a>
