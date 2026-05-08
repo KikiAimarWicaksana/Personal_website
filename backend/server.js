@@ -6,8 +6,8 @@ const multer = require('multer');
 const path = require('path');
 const cloudinary = require('cloudinary').v2;
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
-const pool = require('./db');
 require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
+const pool = require('./db');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -237,4 +237,9 @@ app.delete('/api/activities/:id', verifyToken, async (req, res) => {
   }
 });
 
-app.listen(PORT, () => console.log(`🎮 Pixel Quest server running on http://localhost:${PORT}`));
+// Only listen when running locally (not on Vercel)
+if (process.env.VERCEL !== '1') {
+  app.listen(PORT, () => console.log(`🎮 Pixel Quest server running on http://localhost:${PORT}`));
+}
+
+module.exports = app;

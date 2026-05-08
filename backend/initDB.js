@@ -44,7 +44,8 @@ async function initDB() {
         tech VARCHAR(255) NOT NULL,
         xp INT NOT NULL,
         demo VARCHAR(255),
-        code VARCHAR(255)
+        code VARCHAR(255),
+        image VARCHAR(255)
       )
     `);
 
@@ -57,7 +58,8 @@ async function initDB() {
         title VARCHAR(255) NOT NULL,
         \`desc\` TEXT NOT NULL,
         xp INT NOT NULL,
-        badge VARCHAR(50) NOT NULL
+        badge VARCHAR(50) NOT NULL,
+        image VARCHAR(255)
       )
     `);
 
