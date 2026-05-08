@@ -245,6 +245,15 @@ app.delete('/api/activities/:id', verifyToken, async (req, res) => {
   }
 });
 
+app.use((err, req, res, next) => {
+  console.error('Express Error:', err);
+  res.status(err.status || 500).json({
+    success: false,
+    message: err.message,
+    stack: process.env.NODE_ENV === 'development' ? err.stack : undefined
+  });
+});
+
 // Only listen when running locally (not on Vercel)
 if (process.env.VERCEL !== '1') {
   app.listen(PORT, () => console.log(`🎮 Pixel Quest server running on http://localhost:${PORT}`));
