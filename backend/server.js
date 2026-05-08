@@ -31,10 +31,14 @@ app.use(cors({
 
 // Handle JSON body (compatible with Vercel serverless which pre-parses the body)
 app.use((req, res, next) => {
-  if (req.body && typeof req.body === 'object' && Object.keys(req.body).length > 0) {
-    return next(); // Body already parsed by Vercel
-  }
-  express.json()(req, res, next);
+  express.json()(req, res, (err) => {
+    if (err) {
+      // Body parsing failed (e.g., Vercel already consumed the stream)
+      // Continue without error — req.body may already be set by Vercel
+      return next();
+    }
+    next();
+  });
 });
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
