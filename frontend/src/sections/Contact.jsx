@@ -2,10 +2,9 @@ import { useState } from 'react';
 import API_URL from '../config';
 
 const socials = [
-  { icon: '📧', label: 'EMAIL',    value: 'hello@example.com', href: 'mailto:hello@example.com' },
-  { icon: '🐙', label: 'GITHUB',   value: 'github.com/yourname', href: '#' },
-  { icon: '💼', label: 'LINKEDIN', value: 'linkedin.com/in/yourname', href: '#' },
-  { icon: '🐦', label: 'TWITTER',  value: '@yourhandle', href: '#' },
+  { icon: '📧', label: 'EMAIL', value: 'wicaksanakikiaimar@gmail.com', href: 'mailto:wicaksanakikiaimar@gmail.com' },
+  { icon: '🐙', label: 'GITHUB', value: 'github.com/kikiaimarwicaksana', href: 'https://github.com/kikiaimarwicaksana' },
+  { icon: '💼', label: 'LINKEDIN', value: 'linkedin.com/in/kikiaimarwicaksana', href: 'https://linkedin.com/in/kikiaimarwicaksana' },
 ];
 
 export default function Contact({ showToast }) {
@@ -25,7 +24,7 @@ export default function Contact({ showToast }) {
         body: JSON.stringify(form),
       });
       const data = await res.json();
-      if (data.success) { setSuccess(true); setForm({ name:'',email:'',subject:'',message:'' }); showToast?.('Message Sent!'); }
+      if (data.success) { setSuccess(true); setForm({ name: '', email: '', subject: '', message: '' }); showToast?.('Message Sent!'); }
       else setError(data.message || 'Something went wrong.');
     } catch {
       setError('Cannot reach server. Please try again.');
@@ -80,8 +79,8 @@ export default function Contact({ showToast }) {
               </div>
             ) : (
               <form className="contact-form" onSubmit={handleSubmit}>
-                {[['name','YOUR NAME','Enter your name...','text'],['email','YOUR EMAIL','Enter your email...','email'],
-                  ['subject','SUBJECT','Quest title...','text']].map(([n,l,ph,t]) => (
+                {[['name', 'YOUR NAME', 'Enter your name...', 'text'], ['email', 'YOUR EMAIL', 'Enter your email...', 'email'],
+                ['subject', 'SUBJECT', 'Quest title...', 'text']].map(([n, l, ph, t]) => (
                   <div className="form-group" key={n}>
                     <label htmlFor={n} className="form-label">{l}</label>
                     <input type={t} id={n} name={n} className="pixel-input" placeholder={ph}
