@@ -19,16 +19,7 @@
       "destination": "backend/server.js"
     },
     {
-      "source": "/admin(.*)",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "/$1",
-      "continue": true
-    },
-    {
-      "source": "/(.*)",
+      "source": "/((?!api/).*)",
       "destination": "/index.html"
     }
   ]

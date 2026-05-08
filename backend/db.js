@@ -1,3 +1,4 @@
+require('dotenv').config();
 const mysql = require('mysql2/promise');
 
 // Parse DATABASE_URL and handle SSL for TiDB Cloud
