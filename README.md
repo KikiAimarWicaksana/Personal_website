@@ -1,15 +1,15 @@
 # 🎮 Pixel Quest - Personal Portfolio
 
 <div align="center">
-  <img src="https://aimar.my.id/profile.jpeg" alt="Logo" width="120" style="border-radius: 50%">
+  <img src="https://aimar.my.id/profile.jpeg" alt="Logo" width="120" style="border-radius: 50%; border: 4px solid #00ff99;">
   <h3>Kiki Aimar Wicaksana</h3>
   <p>Data Engineer | Cloud & Data Enthusiast</p>
-  <a href="https://kikiaimarwicaksana.vercel.app"><strong>View Live Website »</strong></a>
+  <a href="https://aimar.my.id"><strong>🚀 View Live Website »</strong></a>
 </div>
 
 ---
 
-## 🚀 Overview
+## 🕹️ Overview
 
 **Pixel Quest** is a professional, gamified portfolio website designed with a modern pixel-art aesthetic. It showcases projects, achievements, and digital products, featuring a full-stack architecture with a custom admin dashboard for content management.
 
@@ -28,8 +28,8 @@
 - **JWT**: Secure token-based authentication for the admin dashboard.
 
 ### Deployment & DevOps
-- **Vercel**: High-performance hosting for both Frontend and Serverless Functions.
-- **GitHub Actions**: Continuous Deployment (CD) pipeline.
+- **Vercel**: High-performance hosting with modern serverless functions.
+- **GitHub**: Source control and CI/CD integration.
 
 ## 🏗️ Architecture
 
@@ -46,29 +46,27 @@ graph TD
 
 ## ✨ Features
 
-- **Gamified UI**: Experience system (XP), pixel-art animations, and quest-themed sections.
-- **Admin Dashboard**: Secure management of portfolio items and activities.
-- **Cloudinary Integration**: Automatic image optimization and cloud storage (no local `uploads/` folder).
-- **Responsive Design**: Optimized for desktop and mobile devices.
-- **Floating Shop Bubble**: Interactive digital product showcase.
+- **🏆 Gamified UI**: Experience system (XP), pixel-art animations, and quest-themed sections.
+- **🛡️ Admin Dashboard**: Secure management of portfolio items and activities.
+- **☁️ Cloudinary Integration**: Automatic image optimization and cloud storage.
+- **📱 Responsive Design**: Fully optimized for desktop, tablet, and mobile devices.
+- **🛒 Floating Shop Bubble**: Interactive showcase for digital products.
 
 ## 📦 Project Structure
 
 ```text
+├── api/
+│   └── index.js        # Vercel Serverless Function entry point
 ├── backend/
-│   ├── server.js       # Main API server & Serverless Entry
-│   ├── db.js           # Database connection (TiDB)
-│   ├── vercel.json     # Backend deployment config
-│   └── package.json
+│   ├── server.js       # Main Express app logic
+│   ├── db.js           # Database connection (TiDB Cloud)
+│   └── initDB.js       # Database initialization script
 ├── frontend/
-│   ├── src/
-│   │   ├── components/ # Reusable UI components
-│   │   ├── pages/      # Main pages & Admin Dashboard
-│   │   ├── sections/   # Home page sections
-│   │   └── App.jsx     # Routing & Core logic
-│   ├── vercel.json     # SPA routing config
-│   └── vite.config.js
-└── .env                # Environment Variables (Shared)
+│   ├── src/            # React components, pages, and sections
+│   ├── public/         # Static assets
+│   └── package.json    # Frontend dependencies
+├── package.json        # Root dependencies (shared with backend)
+└── vercel.json         # Consolidated Vercel routing & config
 ```
 
 ## ⚙️ Local Setup
@@ -78,22 +76,38 @@ graph TD
    git clone https://github.com/KikiAimarWicaksana/Personal_website.git
    ```
 
-2. **Backend Setup:**
+2. **Installation:**
    ```bash
-   cd backend
-   npm install
-   # Configure .env with DATABASE_URL, JWT_SECRET, and CLOUDINARY credentials
-   npm run dev
+   # From the root directory
+   npm run install-all
    ```
 
-3. **Frontend Setup:**
+3. **Configure Environment:**
+   Create a `.env` file in the root with:
+   - `DATABASE_URL`: Your TiDB connection string
+   - `JWT_SECRET`: Secret key for authentication
+   - `CLOUDINARY_URL`: Cloudinary credentials
+
+4. **Run Development Server:**
    ```bash
-   cd frontend
-   npm install
-   # Set VITE_API_URL in .env
-   npm run dev
+   # Start backend
+   cd backend && npm run dev
+   
+   # Start frontend
+   cd frontend && npm run dev
    ```
+
+## 🚀 Deployment (Vercel)
+
+- **Root Directory**: Leave blank or set to `./`.
+- **Output Directory**: Set to `frontend/dist`.
+- **Environment Variables**: Ensure all `.env` variables are added to the Vercel dashboard.
 
 ---
 
-<p align="center">Built with 💚 by Kiki Aimar Wicaksana</p>
+<div align="center">
+  <p>Built with 💚 by <strong>Kiki Aimar Wicaksana</strong></p>
+  <a href="https://linkedin.com/in/kikiaimarwicaksana">LinkedIn</a> | 
+  <a href="https://github.com/kikiaimarwicaksana">GitHub</a> | 
+  <a href="mailto:wicaksanakikiaimar@gmail.com">Email</a>
+</div>
