@@ -1,58 +1,99 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🎮 Pixel Quest - Personal Portfolio
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+<div align="center">
+  <img src="https://kikiaimarwicaksana.vercel.app/profile.jpeg" alt="Logo" width="120" style="border-radius: 50%">
+  <h3>Kiki Aimar Wicaksana</h3>
+  <p>Data Engineer | Cloud & Data Enthusiast</p>
+  <a href="https://kikiaimarwicaksana.vercel.app"><strong>View Live Website »</strong></a>
+</div>
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 🚀 Overview
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+**Pixel Quest** is a professional, gamified portfolio website designed with a modern pixel-art aesthetic. It showcases projects, achievements, and digital products, featuring a full-stack architecture with a custom admin dashboard for content management.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## 🛠️ Tech Stack
 
-## Learning Laravel
+### Frontend
+- **React.js**: Core framework for a dynamic SPA experience.
+- **React Router**: For seamless navigation and admin routing.
+- **Vanilla CSS**: Custom-crafted pixel-art design system.
+- **Vite**: Ultra-fast build tool and development server.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Backend
+- **Node.js & Express**: Scalable serverless API layer.
+- **TiDB Cloud**: Distributed MySQL database for reliable data storage.
+- **Cloudinary**: Cloud-based image management and optimization.
+- **JWT**: Secure token-based authentication for the admin dashboard.
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Deployment & DevOps
+- **Vercel**: High-performance hosting for both Frontend and Serverless Functions.
+- **GitHub Actions**: Continuous Deployment (CD) pipeline.
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+## 🏗️ Architecture
 
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
-
-```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+```mermaid
+graph TD
+    User((User)) -->|HTTPS| Vercel[Vercel Frontend]
+    Admin((Admin)) -->|JWT Auth| Dashboard[Admin Dashboard]
+    Vercel -->|API Calls| API[Express Serverless API]
+    Dashboard -->|POST/PUT/DELETE| API
+    API -->|Query| DB[(TiDB Cloud - MySQL)]
+    API -->|Upload| Cloudinary[Cloudinary Storage]
+    API -->|Fetch Assets| Cloudinary
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+## ✨ Features
 
-## Contributing
+- **Gamified UI**: Experience system (XP), pixel-art animations, and quest-themed sections.
+- **Admin Dashboard**: Secure management of portfolio items and activities.
+- **Cloudinary Integration**: Automatic image optimization and cloud storage (no local `uploads/` folder).
+- **Responsive Design**: Optimized for desktop and mobile devices.
+- **Floating Shop Bubble**: Interactive digital product showcase.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## 📦 Project Structure
 
-## Code of Conduct
+```text
+├── backend/
+│   ├── server.js       # Main API server & Serverless Entry
+│   ├── db.js           # Database connection (TiDB)
+│   ├── vercel.json     # Backend deployment config
+│   └── package.json
+├── frontend/
+│   ├── src/
+│   │   ├── components/ # Reusable UI components
+│   │   ├── pages/      # Main pages & Admin Dashboard
+│   │   ├── sections/   # Home page sections
+│   │   └── App.jsx     # Routing & Core logic
+│   ├── vercel.json     # SPA routing config
+│   └── vite.config.js
+└── .env                # Environment Variables (Shared)
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## ⚙️ Local Setup
 
-## Security Vulnerabilities
+1. **Clone the repo:**
+   ```bash
+   git clone https://github.com/KikiAimarWicaksana/Personal_website.git
+   ```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+2. **Backend Setup:**
+   ```bash
+   cd backend
+   npm install
+   # Configure .env with DATABASE_URL, JWT_SECRET, and CLOUDINARY credentials
+   npm run dev
+   ```
 
-## License
+3. **Frontend Setup:**
+   ```bash
+   cd frontend
+   npm install
+   # Set VITE_API_URL in .env
+   npm run dev
+   ```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+---
+
+<p align="center">Built with 💚 by Kiki Aimar Wicaksana</p>
