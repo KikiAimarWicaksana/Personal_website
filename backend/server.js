@@ -14,8 +14,8 @@ const PORT = process.env.PORT || 5000;
 
 const allowedOrigins = [
   'http://localhost:5173',
-  'personal-website-atr7.vercel.app', // Ganti dengan domain Vercel Anda nanti
-  'https://kikiaimar.com'        // Jika ada domain custom
+  'https://kikiaimarwicaksana.vercel.app',
+  'https://kikiaimar.com'
 ];
 
 app.use(cors({
