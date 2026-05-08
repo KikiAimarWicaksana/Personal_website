@@ -40,13 +40,17 @@ export default function AdminDashboard() {
   const handleDelete = async (id) => {
     if (!window.confirm('Delete this item?')) return;
     try {
-      await fetch(`${API_URL}/api/${tab}/${id}`, {
+      const res = await fetch(`${API_URL}/api/${tab}/${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       });
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        throw new Error(data.message || 'Failed to delete');
+      }
       fetchData();
     } catch (err) {
-      alert('Error deleting item');
+      alert(`Error deleting item: ${err.message}`);
     }
   };
 
