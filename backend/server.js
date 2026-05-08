@@ -28,7 +28,14 @@ app.use(cors({
   },
   credentials: true
 }));
-app.use(express.json());
+
+// Handle JSON body (compatible with Vercel serverless which pre-parses the body)
+app.use((req, res, next) => {
+  if (req.body && typeof req.body === 'object' && Object.keys(req.body).length > 0) {
+    return next(); // Body already parsed by Vercel
+  }
+  express.json()(req, res, next);
+});
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // ── Cloudinary Configuration ───────────────────────────
