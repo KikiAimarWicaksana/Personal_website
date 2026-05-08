@@ -72,10 +72,9 @@ export default function About() {
               <span className="about-bio-role pixel-border-sm">Data & Cloud Enthusiast</span>
             </div>
             <p className="about-bio-text">
-              Halo! Saya seorang developer yang passionate dalam mengubah data dan ide menjadi
-              solusi digital yang berdampak. Dengan pengalaman di bidang web development,
-              data engineering, dan cloud computing, saya selalu mencari quest baru untuk
-              meningkatkan skill dan menciptakan project yang inovatif.
+              Halo! Saya seorang Data Engineer yang passionate dalam mengelola dan mentransformasi data menjadi 
+              wawasan yang berharga. Dengan pengalaman di bidang Data Engineering, Cloud Computing (GCP), 
+              dan Data Architecture, saya selalu mencari tantangan baru untuk membangun sistem data yang efisien dan skalabel.
             </p>
             <p className="about-bio-text">
               Saat ini saya fokus mendalami teknologi cloud dan data pipeline,
