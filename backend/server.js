@@ -31,11 +31,10 @@ app.use(cors({
 
 // Handle JSON body (compatible with Vercel serverless which pre-parses the body)
 app.use((req, res, next) => {
+  const vercelBody = req.body; // Save Vercel's pre-parsed body
   express.json()(req, res, (err) => {
-    if (err) {
-      // Body parsing failed (e.g., Vercel already consumed the stream)
-      // Continue without error — req.body may already be set by Vercel
-      return next();
+    if (err && vercelBody) {
+      req.body = vercelBody; // Restore Vercel's body if Express parser failed
     }
     next();
   });
