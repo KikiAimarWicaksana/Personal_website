@@ -35,13 +35,13 @@
 
 ```mermaid
 graph TD
-    User((User)) -->|HTTPS| Vercel[Vercel Frontend]
-    Admin((Admin)) -->|JWT Auth| Dashboard[Admin Dashboard]
-    Vercel -->|API Calls| API[Express Serverless API]
-    Dashboard -->|POST/PUT/DELETE| API
-    API -->|Query| DB[(TiDB Cloud - MySQL)]
-    API -->|Upload| Cloudinary[Cloudinary Storage]
-    API -->|Fetch Assets| Cloudinary
+    User(("User")) -->|HTTPS| Vercel["Vercel Frontend"]
+    Admin(("Admin")) -->|"JWT Auth"| Dashboard["Admin Dashboard"]
+    Vercel -->|"API Calls"| API["Express Serverless API"]
+    Dashboard -->|"POST/PUT/DELETE"| API
+    API -->|"Query"| DB[("TiDB Cloud - MySQL")]
+    API -->|"Upload"| Cloudinary["Cloudinary Storage"]
+    API -->|"Fetch Assets"| Cloudinary
 ```
 
 ## ✨ Features
