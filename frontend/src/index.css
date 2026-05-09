@@ -445,20 +445,51 @@ body {
 
 .hero-title {
   font-family: var(--font-pixel);
-  font-size: clamp(1.1rem, 3.5vw, 1.8rem);
-  color: var(--primary);
-  text-shadow: 0 0 20px var(--primary);
-  margin-bottom: 1rem;
+  font-size: 3.5rem;
+  color: var(--text);
+  text-shadow: 4px 4px 0 var(--bg2);
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
   position: relative;
 }
 
-.hero-title::before {
-  content: attr(data-text);
-  position: absolute;
-  inset: 0;
-  color: var(--secondary);
-  animation: glitch 4s infinite;
-  clip-path: polygon(0 20%, 100% 20%, 100% 40%, 0 40%);
+.hero-greeting {
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.hero-role {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+}
+
+.hero-socials {
+  display: flex;
+  gap: 1.2rem;
+  margin-bottom: 1.5rem;
+}
+
+.social-link {
+  color: var(--text-dim);
+  transition: color 0.2s, transform 0.2s;
+  display: inline-block;
+}
+
+.social-link:hover {
+  color: var(--primary);
+  transform: translateY(-3px);
+}
+
+.hero-bio {
+  font-size: 1.4rem;
+  margin-bottom: 2.5rem;
+  max-width: 90%;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 
 @keyframes glitch {
@@ -1626,16 +1657,40 @@ body {
   }
 
   .hero-title {
-    font-size: 0.9rem;
-    line-height: 1.6;
+    font-size: 0.85rem;
+    line-height: 1.7;
+    margin-bottom: 1rem;
     word-break: keep-all;
     overflow-wrap: break-word;
     white-space: normal;
   }
 
-  .hero-subtitle {
+  .hero-greeting {
+    font-size: 0.7rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .hero-role {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .hero-socials {
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-bio {
     font-size: 1.1rem;
-    min-height: auto;
+    text-align: center;
+    max-width: 100%;
+    margin-bottom: 2rem;
+  }
+
+  .hero-actions {
+    justify-content: center;
+    width: 100%;
   }
 
   .nav-container {
