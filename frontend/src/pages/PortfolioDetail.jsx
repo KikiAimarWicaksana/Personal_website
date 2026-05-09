@@ -65,8 +65,8 @@ export default function PortfolioDetail() {
           </div>
 
           <div className="project-links" style={{ gap: '1rem' }}>
-            <a href={project.demo} className="pixel-btn">▶ PLAY DEMO</a>
-            <a href={project.code} className="pixel-btn" style={{ borderColor: 'var(--purple)', color: 'var(--purple)' }}>{`{ } VIEW SOURCE`}</a>
+            <a href={project.demo && project.demo.startsWith('http') ? project.demo : project.demo} target="_blank" rel="noopener noreferrer" className="pixel-btn">▶ PLAY DEMO</a>
+            <a href={project.code && project.code.startsWith('http') ? project.code : project.code} target="_blank" rel="noopener noreferrer" className="pixel-btn" style={{ borderColor: 'var(--purple)', color: 'var(--purple)' }}>{`{ } VIEW SOURCE`}</a>
           </div>
         </div>
       </div>

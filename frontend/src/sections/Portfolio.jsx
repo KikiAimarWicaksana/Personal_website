@@ -70,8 +70,8 @@ export default function Portfolio() {
                       {p.tech.map(t => <span className="tech-tag" key={t}>{t}</span>)}
                     </div>
                     <div className="project-links">
-                      <a href={p.demo} className="pixel-btn-sm" onClick={e => e.stopPropagation()}>DEMO</a>
-                      <a href={p.code} className="pixel-btn-sm" onClick={e => e.stopPropagation()}>CODE</a>
+                      <a href={p.demo} target="_blank" rel="noopener noreferrer" className="pixel-btn-sm" onClick={e => e.stopPropagation()}>DEMO</a>
+                      <a href={p.code} target="_blank" rel="noopener noreferrer" className="pixel-btn-sm" onClick={e => e.stopPropagation()}>CODE</a>
                     </div>
                   </div>
                   <div className="project-xp">+{p.xp} XP</div>

@@ -8,7 +8,7 @@ export default function AdminDashboard() {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const [portForm, setPortForm] = useState({ category: 'website', icon: '🌐', color: '#ff6b9d, #c44569', title: '', desc: '', tech: '', xp: 100, demo: '#', code: '#', year: new Date().getFullYear() });
+  const [portForm, setPortForm] = useState({ category: 'website', icon: '🌐', color: '#ff6b9d, #c44569', title: '', desc: '', tech: '', xp: 100, demo: '', code: '', year: new Date().getFullYear() });
   const [portImage, setPortImage] = useState(null);
 
   const [actForm, setActForm] = useState({ year: '2024', icon: '🏆', title: '', desc: '', xp: 100, badge: '' });
@@ -58,7 +58,13 @@ export default function AdminDashboard() {
     e.preventDefault();
     try {
       const formData = new FormData();
-      Object.keys(portForm).forEach(key => formData.append(key, portForm[key]));
+      // Sanitize links to remove accidental '#' prefix
+      const sanitizedForm = {
+        ...portForm,
+        demo: portForm.demo.startsWith('#') ? portForm.demo.substring(1) : portForm.demo,
+        code: portForm.code.startsWith('#') ? portForm.code.substring(1) : portForm.code
+      };
+      Object.keys(sanitizedForm).forEach(key => formData.append(key, sanitizedForm[key]));
       if (portImage) formData.append('image', portImage);
 
       await fetch(`${API_URL}/api/portfolio`, {
@@ -66,7 +72,7 @@ export default function AdminDashboard() {
         headers: { 'Authorization': `Bearer ${token}` },
         body: formData
       });
-      setPortForm({ category: 'website', icon: '🌐', color: '#ff6b9d, #c44569', title: '', desc: '', tech: '', xp: 100, demo: '#', code: '#', year: new Date().getFullYear() });
+      setPortForm({ category: 'website', icon: '🌐', color: '#ff6b9d, #c44569', title: '', desc: '', tech: '', xp: 100, demo: '', code: '', year: new Date().getFullYear() });
       setPortImage(null);
       // Reset file input by unmounting or clearing its value if controlled (using key is a hack but simpler here: not used. we just set state to null)
       document.getElementById('portFile').value = "";
