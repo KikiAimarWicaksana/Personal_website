@@ -7,12 +7,13 @@ export default function Hero() {
     <header className="hero-section" id="hero" style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', paddingTop: '4rem' }}>
       <div className="hero-content" style={{ maxWidth: '1100px', width: '100%', padding: '2rem' }}>
 
-        {/* TEXT ON THE LEFT        <div className="hero-text-box">
+        {/* TEXT ON THE LEFT */}
+        <div className="hero-text-box">
           <p className="hero-greeting" style={{ color: 'var(--primary)', fontFamily: 'var(--font-pixel)', letterSpacing: '1px' }}>
             HALO, SAYA
           </p>
           <h1 className="hero-title">
-            Kiki Aimar Wicaksana
+            Kiki Aimar<br />Wicaksana
           </h1>
           <h2 className="hero-role" style={{ fontFamily: 'var(--font-vt)', color: 'var(--text)', fontWeight: 'bold' }}>
             Seorang Data Engineer
@@ -44,7 +45,7 @@ export default function Hero() {
               Kontak Saya
             </a>
           </div>
-        </div> </div>
+        </div>
 
         {/* IMAGE ON THE RIGHT */}
         <div className="hero-pixel-art" style={{ display: 'flex', justifyContent: 'center' }}>
