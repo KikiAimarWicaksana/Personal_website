@@ -8,6 +8,18 @@ const path = require('path');
 const cloudinary = require('cloudinary').v2;
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
 const pool = require('./db');
+const nodemailer = require('nodemailer');
+
+// ── Nodemailer Transporter Configuration ───────────────
+const transporter = nodemailer.createTransport({
+  host: process.env.EMAIL_HOST,
+  port: process.env.EMAIL_PORT || 587,
+  secure: process.env.EMAIL_PORT == 465, // true for 465, false for other ports
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+  },
+});
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -167,13 +179,41 @@ app.get('/api/stats', async (req, res) => {
   }
 });
 
-app.post('/api/contact', (req, res) => {
+app.post('/api/contact', async (req, res) => {
   const { name, email, subject, message } = req.body;
   if (!name || !email || !subject || !message) {
     return res.status(400).json({ success: false, message: 'All fields are required.' });
   }
-  console.log('📨 New message from:', name, email);
-  res.json({ success: true, message: 'Message received! Quest accepted! +100 XP' });
+
+  try {
+    const mailOptions = {
+      from: `"${name}" <${process.env.EMAIL_USER}>`, // Recommended to use your own email as "from" to avoid spam filters
+      replyTo: email,
+      to: process.env.EMAIL_RECEIVER || process.env.EMAIL_USER,
+      subject: `[Contact Form] ${subject}`,
+      text: `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
+      html: `
+        <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #eee; padding: 20px;">
+          <h2 style="color: #333;">New Message from Portfolio</h2>
+          <p><strong>Name:</strong> ${name}</p>
+          <p><strong>Email:</strong> ${email}</p>
+          <p><strong>Subject:</strong> ${subject}</p>
+          <div style="margin-top: 20px; padding: 15px; background: #f9f9f9; border-radius: 5px;">
+            <p style="white-space: pre-wrap;">${message}</p>
+          </div>
+          <hr style="margin-top: 30px; border: 0; border-top: 1px solid #eee;" />
+          <p style="font-size: 12px; color: #888;">This message was sent from your portfolio contact form.</p>
+        </div>
+      `,
+    };
+
+    await transporter.sendMail(mailOptions);
+    console.log('📨 Email sent successfully from:', email);
+    res.json({ success: true, message: 'Message received! Quest accepted! +100 XP' });
+  } catch (error) {
+    console.error('❌ Error sending email:', error);
+    res.status(500).json({ success: false, message: 'Failed to send message. Please try again later.' });
+  }
 });
 
 // ── Admin Protected Routes (CRUD) ──────────────────────
