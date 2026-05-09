@@ -160,6 +160,10 @@ export default function AdminDashboard() {
                   <option value="📱">📱 Mobile</option>
                   <option value="🎮">🎮 Game</option>
                 </select>
+                <div style={{ display: 'flex', gap: '1rem' }}>
+                  <input className="pixel-input" placeholder="Demo Link (URL)" value={portForm.demo} onChange={e => setPortForm({ ...portForm, demo: e.target.value })} />
+                  <input className="pixel-input" placeholder="Source Link (URL)" value={portForm.code} onChange={e => setPortForm({ ...portForm, code: e.target.value })} />
+                </div>
                 <div style={{ background: 'var(--bg2)', padding: '1rem' }} className="pixel-border-sm">
                   <label style={{ fontFamily: 'var(--font-pixel)', fontSize: '.6rem', color: 'var(--primary)', display: 'block', marginBottom: '.5rem' }}>UPLOAD IMAGE (OPTIONAL)</label>
                   <input id="portFile" type="file" accept="image/*" onChange={e => setPortImage(e.target.files[0])} style={{ color: 'white', fontFamily: 'var(--font-vt)', fontSize: '1rem' }} />
