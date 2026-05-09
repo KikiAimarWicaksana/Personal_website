@@ -27,6 +27,8 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
+  width: 100%;
 }
 
 body {
@@ -34,6 +36,8 @@ body {
   background: var(--bg);
   color: var(--text);
   overflow-x: hidden;
+  width: 100%;
+  position: relative;
   cursor: none;
 }
 
@@ -1285,6 +1289,8 @@ body {
   font-size: 1.4rem;
   color: var(--cyan);
   text-decoration: none;
+  word-break: break-all;
+  overflow-wrap: break-word;
 }
 
 .method-value:hover {
@@ -1570,13 +1576,25 @@ body {
     --pixel-size: 2px;
   }
 
+  html, body {
+    position: relative;
+    overflow-x: hidden;
+  }
+
   .section {
     padding: 3rem 1rem;
+    overflow: hidden;
+  }
+
+  .section-container {
+    width: 100%;
+    padding: 0 0.5rem;
   }
 
   .hero-section {
     padding-top: 6rem;
     justify-content: flex-start;
+    min-height: auto;
   }
 
   .hero-content {
@@ -1584,8 +1602,9 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 2rem;
+    gap: 1.5rem;
     width: 100%;
+    overflow: hidden;
   }
 
   .hero-pixel-art {
@@ -1595,24 +1614,32 @@ body {
   }
 
   .character-sprite {
-    width: 140px;
-    height: 180px;
+    width: 120px;
+    height: 160px;
   }
 
   .hero-text-box {
     padding: 1rem;
     width: 100%;
     text-align: center;
+    background: transparent;
   }
 
   .hero-title {
-    font-size: 1.1rem;
-    line-height: 1.5;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    word-break: keep-all;
+    overflow-wrap: break-word;
+    white-space: normal;
   }
 
   .hero-subtitle {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     min-height: auto;
+  }
+
+  .nav-container {
+    padding: 0 1rem;
   }
 
   .nav-menu {
@@ -1639,40 +1666,46 @@ body {
   .portfolio-grid {
     grid-template-columns: 1fr;
     grid-auto-rows: auto;
+    gap: 1.5rem;
   }
 
   .project-card {
-    height: auto;
-  }
-
-  .project-title, .project-desc, .project-tech {
-    height: auto;
-    min-height: unset;
+    width: 100%;
   }
 
   .about-photo-card {
     flex-direction: column;
     align-items: center;
+    width: 100%;
   }
 
   .about-photo-frame {
-    width: 180px;
-    height: 220px;
+    width: 160px;
+    height: 200px;
   }
 
   .about-mini-stats {
     flex-direction: row;
     width: 100%;
     justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .mini-stat {
+    padding: 0.4rem;
   }
 
   .about-bio-text {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     text-align: center;
   }
 
-  .skills-grid {
-    grid-template-columns: 1fr;
+  .contact-content {
+    width: 100%;
+  }
+
+  .method-value {
+    font-size: 1.1rem;
   }
 }
 
