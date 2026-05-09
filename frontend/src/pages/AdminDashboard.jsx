@@ -172,7 +172,7 @@ export default function AdminDashboard() {
           <button className={`pixel-btn ${tab === 'activities' ? 'active' : ''}`} onClick={() => setTab('activities')}>ACTIVITIES</button>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem' }}>
+        <div className="admin-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
           {/* Data List */}
           <div className="pixel-border" style={{ background: 'rgba(15,15,46,.9)', padding: '2rem' }}>
             <h3 style={{ fontFamily: 'var(--font-pixel)', color: 'var(--text)', marginBottom: '1.5rem', fontSize: '1rem' }}>EXISTING DATA</h3>
