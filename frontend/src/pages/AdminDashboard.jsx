@@ -161,8 +161,14 @@ export default function AdminDashboard() {
                   <option value="🎮">🎮 Game</option>
                 </select>
                 <div style={{ display: 'flex', gap: '1rem' }}>
-                  <input className="pixel-input" placeholder="Demo Link (URL)" value={portForm.demo} onChange={e => setPortForm({ ...portForm, demo: e.target.value })} />
-                  <input className="pixel-input" placeholder="Source Link (URL)" value={portForm.code} onChange={e => setPortForm({ ...portForm, code: e.target.value })} />
+                  <div style={{ flex: 1 }}>
+                    <label style={{ fontFamily: 'var(--font-pixel)', fontSize: '.5rem', color: 'var(--accent)', display: 'block', marginBottom: '.3rem' }}>DEMO LINK</label>
+                    <input className="pixel-input" placeholder="https://..." value={portForm.demo} onChange={e => setPortForm({ ...portForm, demo: e.target.value })} />
+                  </div>
+                  <div style={{ flex: 1 }}>
+                    <label style={{ fontFamily: 'var(--font-pixel)', fontSize: '.5rem', color: 'var(--purple)', display: 'block', marginBottom: '.3rem' }}>SOURCE LINK</label>
+                    <input className="pixel-input" placeholder="https://github.com/..." value={portForm.code} onChange={e => setPortForm({ ...portForm, code: e.target.value })} />
+                  </div>
                 </div>
                 <div style={{ background: 'var(--bg2)', padding: '1rem' }} className="pixel-border-sm">
                   <label style={{ fontFamily: 'var(--font-pixel)', fontSize: '.6rem', color: 'var(--primary)', display: 'block', marginBottom: '.5rem' }}>UPLOAD IMAGE (OPTIONAL)</label>
