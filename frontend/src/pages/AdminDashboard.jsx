@@ -13,6 +13,7 @@ export default function AdminDashboard() {
 
   const [actForm, setActForm] = useState({ year: '2024', icon: '🏆', title: '', desc: '', xp: 100, badge: '' });
   const [actImage, setActImage] = useState(null);
+  const [editId, setEditId] = useState(null);
 
   const token = localStorage.getItem('adminToken');
 
@@ -21,6 +22,7 @@ export default function AdminDashboard() {
       navigate('/admin');
       return;
     }
+    setEditId(null);
     fetchData();
   }, [tab]);
 
@@ -38,7 +40,7 @@ export default function AdminDashboard() {
   };
 
   const handleDelete = async (id) => {
-    // Note: window.confirm removed because some browsers block it
+    if (!window.confirm('Are you sure you want to delete this quest?')) return;
     try {
       const res = await fetch(`${API_URL}/api/${tab}/${id}`, {
         method: 'DELETE',
@@ -54,11 +56,49 @@ export default function AdminDashboard() {
     }
   };
 
+  const handleEdit = (item) => {
+    setEditId(item.id);
+    if (tab === 'portfolio') {
+      setPortForm({
+        category: item.category,
+        icon: item.icon,
+        color: item.color,
+        title: item.title,
+        desc: item.desc,
+        tech: Array.isArray(item.tech) ? item.tech.join(', ') : item.tech,
+        xp: item.xp,
+        demo: item.demo || '',
+        code: item.code || '',
+        year: item.year || '',
+        existingImage: item.image
+      });
+    } else {
+      setActForm({
+        year: item.year,
+        icon: item.icon,
+        title: item.title,
+        desc: item.desc,
+        xp: item.xp,
+        badge: item.badge,
+        existingImage: item.image
+      });
+    }
+  };
+
+  const handleCancel = () => {
+    setEditId(null);
+    setPortForm({ category: 'website', icon: '🌐', color: '#ff6b9d, #c44569', title: '', desc: '', tech: '', xp: 100, demo: '', code: '', year: new Date().getFullYear() });
+    setActForm({ year: '2024', icon: '🏆', title: '', desc: '', xp: 100, badge: '' });
+    setPortImage(null);
+    setActImage(null);
+    if (document.getElementById('portFile')) document.getElementById('portFile').value = "";
+    if (document.getElementById('actFile')) document.getElementById('actFile').value = "";
+  };
+
   const handleAddPortfolio = async (e) => {
     e.preventDefault();
     try {
       const formData = new FormData();
-      // Sanitize links to remove accidental '#' prefix
       const sanitizedForm = {
         ...portForm,
         demo: portForm.demo.startsWith('#') ? portForm.demo.substring(1) : portForm.demo,
@@ -67,18 +107,22 @@ export default function AdminDashboard() {
       Object.keys(sanitizedForm).forEach(key => formData.append(key, sanitizedForm[key]));
       if (portImage) formData.append('image', portImage);
 
-      await fetch(`${API_URL}/api/portfolio`, {
-        method: 'POST',
+      const method = editId ? 'PUT' : 'POST';
+      const endpoint = editId ? `/api/portfolio/${editId}` : '/api/portfolio';
+
+      const res = await fetch(`${API_URL}${endpoint}`, {
+        method: method,
         headers: { 'Authorization': `Bearer ${token}` },
         body: formData
       });
-      setPortForm({ category: 'website', icon: '🌐', color: '#ff6b9d, #c44569', title: '', desc: '', tech: '', xp: 100, demo: '', code: '', year: new Date().getFullYear() });
-      setPortImage(null);
-      // Reset file input by unmounting or clearing its value if controlled (using key is a hack but simpler here: not used. we just set state to null)
-      document.getElementById('portFile').value = "";
+      const data = await res.json();
+      if (!data.success) throw new Error(data.message);
+
+      handleCancel();
       fetchData();
+      alert(editId ? 'Quest updated!' : 'Quest added!');
     } catch (err) {
-      alert('Error adding portfolio');
+      alert('Error: ' + err.message);
     }
   };
 
@@ -89,17 +133,22 @@ export default function AdminDashboard() {
       Object.keys(actForm).forEach(key => formData.append(key, actForm[key]));
       if (actImage) formData.append('image', actImage);
 
-      await fetch(`${API_URL}/api/activities`, {
-        method: 'POST',
+      const method = editId ? 'PUT' : 'POST';
+      const endpoint = editId ? `/api/activities/${editId}` : '/api/activities';
+
+      const res = await fetch(`${API_URL}${endpoint}`, {
+        method: method,
         headers: { 'Authorization': `Bearer ${token}` },
         body: formData
       });
-      setActForm({ year: '2024', icon: '🏆', title: '', desc: '', xp: 100, badge: '' });
-      setActImage(null);
-      document.getElementById('actFile').value = "";
+      const data = await res.json();
+      if (!data.success) throw new Error(data.message);
+
+      handleCancel();
       fetchData();
+      alert(editId ? 'Activity updated!' : 'Activity added!');
     } catch (err) {
-      alert('Error adding activity');
+      alert('Error: ' + err.message);
     }
   };
 
@@ -134,7 +183,10 @@ export default function AdminDashboard() {
                     <strong style={{ fontFamily: 'var(--font-pixel)', fontSize: '.7rem', color: 'var(--accent)' }}>{item.title}</strong>
                     <p style={{ fontFamily: 'var(--font-vt)', fontSize: '1.2rem', color: 'var(--text-dim)', margin: '0' }}>{item.category} {item.year ? `(${item.year})` : ''} | {item.xp} XP</p>
                   </div>
-                  <button className="pixel-btn-sm" style={{ borderColor: 'var(--secondary)', color: 'var(--secondary)' }} onClick={() => handleDelete(item.id)}>DEL</button>
+                  <div style={{ display: 'flex', gap: '.5rem' }}>
+                    <button className="pixel-btn-sm" style={{ borderColor: 'var(--accent)', color: 'var(--accent)' }} onClick={() => handleEdit(item)}>EDIT</button>
+                    <button className="pixel-btn-sm" style={{ borderColor: 'var(--secondary)', color: 'var(--secondary)' }} onClick={() => handleDelete(item.id)}>DEL</button>
+                  </div>
                 </div>
               ))}
             </div>
@@ -142,7 +194,7 @@ export default function AdminDashboard() {
 
           {/* Add Form */}
           <div className="pixel-border" style={{ background: 'rgba(15,15,46,.9)', padding: '2rem' }}>
-            <h3 style={{ fontFamily: 'var(--font-pixel)', color: 'var(--primary)', marginBottom: '1.5rem', fontSize: '1rem' }}>ADD NEW {tab.toUpperCase()}</h3>
+            <h3 style={{ fontFamily: 'var(--font-pixel)', color: 'var(--primary)', marginBottom: '1.5rem', fontSize: '1rem' }}>{editId ? 'EDIT' : 'ADD NEW'} {tab.toUpperCase()}</h3>
 
             {tab === 'portfolio' ? (
               <form onSubmit={handleAddPortfolio} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
@@ -180,7 +232,10 @@ export default function AdminDashboard() {
                   <label style={{ fontFamily: 'var(--font-pixel)', fontSize: '.6rem', color: 'var(--primary)', display: 'block', marginBottom: '.5rem' }}>UPLOAD IMAGE (OPTIONAL)</label>
                   <input id="portFile" type="file" accept="image/*" onChange={e => setPortImage(e.target.files[0])} style={{ color: 'white', fontFamily: 'var(--font-vt)', fontSize: '1rem' }} />
                 </div>
-                <button type="submit" className="pixel-btn">ADD PORTFOLIO</button>
+                <div style={{ display: 'flex', gap: '1rem' }}>
+                  <button type="submit" className="pixel-btn" style={{ flex: 1 }}>{editId ? 'UPDATE' : 'ADD'} PORTFOLIO</button>
+                  {editId && <button type="button" className="pixel-btn" style={{ flex: 1, borderColor: 'var(--text-dim)', color: 'var(--text-dim)' }} onClick={handleCancel}>CANCEL</button>}
+                </div>
               </form>
             ) : (
               <form onSubmit={handleAddActivity} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
@@ -196,7 +251,10 @@ export default function AdminDashboard() {
                   <label style={{ fontFamily: 'var(--font-pixel)', fontSize: '.6rem', color: 'var(--primary)', display: 'block', marginBottom: '.5rem' }}>UPLOAD IMAGE (OPTIONAL)</label>
                   <input id="actFile" type="file" accept="image/*" onChange={e => setActImage(e.target.files[0])} style={{ color: 'white', fontFamily: 'var(--font-vt)', fontSize: '1rem' }} />
                 </div>
-                <button type="submit" className="pixel-btn">ADD ACTIVITY</button>
+                <div style={{ display: 'flex', gap: '1rem' }}>
+                  <button type="submit" className="pixel-btn" style={{ flex: 1 }}>{editId ? 'UPDATE' : 'ADD'} ACTIVITY</button>
+                  {editId && <button type="button" className="pixel-btn" style={{ flex: 1, borderColor: 'var(--text-dim)', color: 'var(--text-dim)' }} onClick={handleCancel}>CANCEL</button>}
+                </div>
               </form>
             )}
           </div>
