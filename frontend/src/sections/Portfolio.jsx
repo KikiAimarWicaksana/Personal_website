@@ -63,7 +63,7 @@ export default function Portfolio() {
                     <div className="project-overlay"><span className="overlay-text">VIEW QUEST</span></div>
                   </div>
                   <div className="project-info">
-                    <div className="project-badge">{p.category.toUpperCase()}</div>
+                    <div className="project-badge">{p.category.toUpperCase()} {p.year && `• ${p.year}`}</div>
                     <h3 className="project-title">{p.title}</h3>
                     <p className="project-desc">{p.desc}</p>
                     <div className="project-tech">

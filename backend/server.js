@@ -181,11 +181,11 @@ app.post('/api/contact', (req, res) => {
 // Portfolio
 app.post('/api/portfolio', verifyToken, upload.single('image'), async (req, res) => {
   try {
-    const { category, icon, color, title, desc, tech, xp, demo, code } = req.body;
+    const { category, icon, color, title, desc, tech, xp, demo, code, year } = req.body;
     const image = req.file ? req.file.path : null;
     await pool.query(
-      'INSERT INTO portfolio (category, icon, color, title, `desc`, tech, xp, demo, code, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-      [category, icon, color, title, desc, tech, xp, demo, code, image]
+      'INSERT INTO portfolio (category, icon, color, title, `desc`, tech, xp, demo, code, image, year) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+      [category, icon, color, title, desc, tech, xp, demo, code, image, year]
     );
     res.json({ success: true, message: 'Quest added successfully' });
   } catch (err) {
@@ -195,11 +195,11 @@ app.post('/api/portfolio', verifyToken, upload.single('image'), async (req, res)
 
 app.put('/api/portfolio/:id', verifyToken, upload.single('image'), async (req, res) => {
   try {
-    const { category, icon, color, title, desc, tech, xp, demo, code } = req.body;
+    const { category, icon, color, title, desc, tech, xp, demo, code, year } = req.body;
     const image = req.file ? req.file.path : req.body.existingImage;
     await pool.query(
-      'UPDATE portfolio SET category=?, icon=?, color=?, title=?, `desc`=?, tech=?, xp=?, demo=?, code=?, image=? WHERE id=?',
-      [category, icon, color, title, desc, tech, xp, demo, code, image, req.params.id]
+      'UPDATE portfolio SET category=?, icon=?, color=?, title=?, `desc`=?, tech=?, xp=?, demo=?, code=?, image=?, year=? WHERE id=?',
+      [category, icon, color, title, desc, tech, xp, demo, code, image, year, req.params.id]
     );
     res.json({ success: true, message: 'Quest updated successfully' });
   } catch (err) {

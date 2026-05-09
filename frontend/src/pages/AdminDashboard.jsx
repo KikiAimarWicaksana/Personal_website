@@ -8,7 +8,7 @@ export default function AdminDashboard() {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const [portForm, setPortForm] = useState({ category: 'website', icon: '🌐', color: '#ff6b9d, #c44569', title: '', desc: '', tech: '', xp: 100, demo: '#', code: '#' });
+  const [portForm, setPortForm] = useState({ category: 'website', icon: '🌐', color: '#ff6b9d, #c44569', title: '', desc: '', tech: '', xp: 100, demo: '#', code: '#', year: new Date().getFullYear() });
   const [portImage, setPortImage] = useState(null);
 
   const [actForm, setActForm] = useState({ year: '2024', icon: '🏆', title: '', desc: '', xp: 100, badge: '' });
@@ -66,7 +66,7 @@ export default function AdminDashboard() {
         headers: { 'Authorization': `Bearer ${token}` },
         body: formData
       });
-      setPortForm({ category: 'website', icon: '🌐', color: '#ff6b9d, #c44569', title: '', desc: '', tech: '', xp: 100, demo: '#', code: '#' });
+      setPortForm({ category: 'website', icon: '🌐', color: '#ff6b9d, #c44569', title: '', desc: '', tech: '', xp: 100, demo: '#', code: '#', year: new Date().getFullYear() });
       setPortImage(null);
       // Reset file input by unmounting or clearing its value if controlled (using key is a hack but simpler here: not used. we just set state to null)
       document.getElementById('portFile').value = "";
@@ -126,7 +126,7 @@ export default function AdminDashboard() {
                 <div key={item.id} className="pixel-border-sm" style={{ padding: '1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <div>
                     <strong style={{ fontFamily: 'var(--font-pixel)', fontSize: '.7rem', color: 'var(--accent)' }}>{item.title}</strong>
-                    <p style={{ fontFamily: 'var(--font-vt)', fontSize: '1.2rem', color: 'var(--text-dim)', margin: '0' }}>{tab === 'portfolio' ? item.category : item.year} | {item.xp} XP</p>
+                    <p style={{ fontFamily: 'var(--font-vt)', fontSize: '1.2rem', color: 'var(--text-dim)', margin: '0' }}>{item.category} {item.year ? `(${item.year})` : ''} | {item.xp} XP</p>
                   </div>
                   <button className="pixel-btn-sm" style={{ borderColor: 'var(--secondary)', color: 'var(--secondary)' }} onClick={() => handleDelete(item.id)}>DEL</button>
                 </div>
@@ -149,9 +149,17 @@ export default function AdminDashboard() {
                 <textarea className="pixel-input" placeholder="Description" required value={portForm.desc} onChange={e => setPortForm({ ...portForm, desc: e.target.value })} />
                 <input className="pixel-input" placeholder="Technologies (comma separated)" required value={portForm.tech} onChange={e => setPortForm({ ...portForm, tech: e.target.value })} />
                 <div style={{ display: 'flex', gap: '1rem' }}>
+                  <input className="pixel-input" type="number" placeholder="Year" required value={portForm.year} onChange={e => setPortForm({ ...portForm, year: e.target.value })} />
                   <input className="pixel-input" type="number" placeholder="XP" required value={portForm.xp} onChange={e => setPortForm({ ...portForm, xp: e.target.value })} />
-                  <input className="pixel-input" placeholder="Icon (emoji)" required value={portForm.icon} onChange={e => setPortForm({ ...portForm, icon: e.target.value })} />
                 </div>
+                <select className="pixel-input" required value={portForm.icon} onChange={e => setPortForm({ ...portForm, icon: e.target.value })}>
+                  <option value="">-- Select Icon --</option>
+                  <option value="📊">📊 Data</option>
+                  <option value="☁️">☁️ Cloud</option>
+                  <option value="🌐">🌐 Website</option>
+                  <option value="📱">📱 Mobile</option>
+                  <option value="🎮">🎮 Game</option>
+                </select>
                 <div style={{ background: 'var(--bg2)', padding: '1rem' }} className="pixel-border-sm">
                   <label style={{ fontFamily: 'var(--font-pixel)', fontSize: '.6rem', color: 'var(--primary)', display: 'block', marginBottom: '.5rem' }}>UPLOAD IMAGE (OPTIONAL)</label>
                   <input id="portFile" type="file" accept="image/*" onChange={e => setPortImage(e.target.files[0])} style={{ color: 'white', fontFamily: 'var(--font-vt)', fontSize: '1rem' }} />
