@@ -57,10 +57,7 @@ export default function Hero() {
 
       </div>
 
-      <div className="scroll-indicator" style={{ position: 'absolute', bottom: '2rem', left: '50%', transform: 'translateX(-50%)', textAlign: 'center' }}>
-        <span className="scroll-arrow" style={{ display: 'block', marginBottom: '0.5rem', animation: 'bounce 2s infinite' }}>▼</span>
-        <span className="scroll-text" style={{ fontFamily: 'var(--font-pixel)', fontSize: '0.5rem', color: 'var(--text-dim)' }}>SCROLL DOWN</span>
-      </div>
+
     </header>
   );
 }

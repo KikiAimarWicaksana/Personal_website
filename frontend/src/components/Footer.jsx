@@ -39,7 +39,7 @@ export default function Footer() {
         </div>
         <div className="footer-text">
           <p>© {new Date().getFullYear()} PIXEL QUEST — Crafted with ❤️ and ☕</p>
-          <p className="footer-subtext">PRESS START TO CONTINUE...</p>
+
         </div>
         <button className="pixel-btn-sm back-to-top"
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>▲ TOP</button>
