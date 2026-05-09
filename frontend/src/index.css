@@ -1567,7 +1567,52 @@ body {
 
 @media (max-width: 600px) {
   :root {
-    --pixel-size: 3px;
+    --pixel-size: 2px;
+  }
+
+  .section {
+    padding: 3rem 1rem;
+  }
+
+  .hero-section {
+    padding-top: 6rem;
+    justify-content: flex-start;
+  }
+
+  .hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    width: 100%;
+  }
+
+  .hero-pixel-art {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .character-sprite {
+    width: 140px;
+    height: 180px;
+  }
+
+  .hero-text-box {
+    padding: 1rem;
+    width: 100%;
+    text-align: center;
+  }
+
+  .hero-title {
+    font-size: 1.1rem;
+    line-height: 1.5;
+  }
+
+  .hero-subtitle {
+    font-size: 1.2rem;
+    min-height: auto;
   }
 
   .nav-menu {
@@ -1605,34 +1650,25 @@ body {
     min-height: unset;
   }
 
-  .hero-title {
-    font-size: 1.4rem;
-  }
-
-  .hero-subtitle {
-    font-size: 1.4rem;
-  }
-
-  .section-title {
-    font-size: 1rem;
-  }
-
   .about-photo-card {
     flex-direction: column;
+    align-items: center;
   }
 
   .about-photo-frame {
-    width: 200px;
-    height: 240px;
+    width: 180px;
+    height: 220px;
   }
 
   .about-mini-stats {
     flex-direction: row;
     width: 100%;
+    justify-content: center;
   }
 
   .about-bio-text {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
+    text-align: center;
   }
 
   .skills-grid {
