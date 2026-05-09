@@ -66,6 +66,7 @@ export default function Portfolio() {
                     <div className={`project-badge ${p.category.toLowerCase()}`}>{p.category.toUpperCase()} {p.year && `• ${p.year}`}</div>
                     <h3 className="project-title">{p.title}</h3>
                     <p className="project-desc">{p.desc}</p>
+                    <span className="read-more">LEARN MORE ➔</span>
                     <div className="project-tech">
                       {p.tech.map(t => <span className="tech-tag" key={t}>{t}</span>)}
                     </div>
