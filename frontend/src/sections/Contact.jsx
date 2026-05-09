@@ -2,7 +2,7 @@ import { useState } from 'react';
 import API_URL from '../config';
 
 const socials = [
-  { icon: '📧', label: 'EMAIL', value: 'wicaksanakikiaimar@gmail.com', href: 'mailto:wicaksanakikiaimar@gmail.com' },
+  { icon: '📧', label: 'EMAIL', value: 'kikitrade28@gmail.com', href: 'mailto:kikitrade28@gmail.com' },
   { icon: '🐙', label: 'GITHUB', value: 'github.com/kikiaimarwicaksana', href: 'https://github.com/kikiaimarwicaksana' },
   { icon: '💼', label: 'LINKEDIN', value: 'linkedin.com/in/kikiaimarwicaksana', href: 'https://linkedin.com/in/kikiaimarwicaksana' },
 ];
