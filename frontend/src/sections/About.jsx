@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import API_URL from '../config';
 
 const skills = [
   { icon: '🐍', name: 'Python', level: 90 },
@@ -11,15 +12,10 @@ const skills = [
   { icon: '🐘', name: 'Spark / Big Data', level: 70 },
 ];
 
-const stats = [
-  { label: 'Projects', value: '10+', icon: '🗡️' },
-  { label: 'Certificates', value: '15+', icon: '📜' },
-  { label: 'Experience', value: '2 Yrs', icon: '⏳' },
-];
-
 export default function About() {
   const skillsRef = useRef(null);
   const [visible, setVisible] = useState(false);
+  const [projectCount, setProjectCount] = useState('10+'); // Default fallback
 
   useEffect(() => {
     const obs = new IntersectionObserver(
@@ -29,6 +25,23 @@ export default function About() {
     if (skillsRef.current) obs.observe(skillsRef.current);
     return () => obs.disconnect();
   }, []);
+
+  useEffect(() => {
+    fetch(`${API_URL}/api/stats`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.success && data.data && data.data.quests !== undefined) {
+          setProjectCount(`${data.data.quests}+`);
+        }
+      })
+      .catch(err => console.error('Error fetching stats:', err));
+  }, []);
+
+  const stats = [
+    { label: 'Projects', value: projectCount, icon: '🗡️' },
+    { label: 'Certificates', value: '15+', icon: '📜' },
+    { label: 'Experience', value: '2 Yrs', icon: '⏳' },
+  ];
 
   return (
     <section className="section about-section" id="about">
