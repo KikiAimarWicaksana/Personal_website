@@ -52,7 +52,7 @@ export default function ActivityDetail() {
           {activity.image && (
             <img src={activity.image.startsWith('http') ? activity.image : `${API_URL}/uploads/${activity.image}`} alt={activity.title} style={{ width: '100%', maxWidth: '500px', height: 'auto', objectFit: 'cover', margin: '0 0 2rem', display: 'block', border: '4px solid var(--bg)', boxShadow: '0 0 0 2px var(--secondary)' }} />
           )}
-          <p style={{ fontFamily: 'var(--font-vt)', fontSize: '1.8rem', color: 'var(--text-dim)', maxWidth: '800px', margin: '0 0 3rem', lineHeight: '1.6', whiteSpace: 'pre-wrap', textAlign: 'justify' }}>{activity.desc}</p>
+          <p style={{ fontFamily: 'var(--font-vt)', fontSize: '1.8rem', color: 'var(--text-dim)', maxWidth: '800px', margin: '0 0 3rem', lineHeight: '1.6', whiteSpace: 'pre-wrap' }}>{activity.desc}</p>
           
           <div className="timeline-badge" style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
             <span className="badge-xp" style={{ fontSize: '.7rem', padding: '.6rem 1.2rem' }}>+{activity.xp} XP</span>
