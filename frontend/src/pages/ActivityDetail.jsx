@@ -46,7 +46,7 @@ export default function ActivityDetail() {
             <span>{activity.icon}</span>
           </div>
           
-          <div className="timeline-date pixel-border-sm" style={{ fontSize: '.9rem', padding: '.4rem 1rem', display: 'inline-block', marginBottom: '1.5rem' }}>{activity.year}</div>
+          <div className="timeline-date pixel-border-sm" style={{ fontSize: '.7rem', padding: '.4rem 1rem', display: 'inline-block', marginBottom: '1.5rem' }}>{activity.year}</div>
           
           <h1 style={{ fontFamily: 'var(--font-pixel)', fontSize: '1.4rem', color: 'var(--text)', marginBottom: '1.5rem' }}>{activity.title}</h1>
           {activity.image && (
