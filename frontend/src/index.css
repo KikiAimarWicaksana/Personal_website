@@ -1026,11 +1026,11 @@ body {
 
 .project-title {
   font-family: var(--font-pixel);
-  font-size: .75rem;
+  font-size: .9rem;
   color: var(--primary);
   margin-bottom: .8rem;
   line-height: 1.4;
-  height: 3.2rem; /* Fixed height for up to 3 lines */
+  height: 3.5rem; /* Increased height */
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
@@ -1039,7 +1039,7 @@ body {
 
 .project-desc {
   font-family: var(--font-vt);
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   color: var(--text-dim);
   margin-bottom: .5rem;
   line-height: 1.5;
@@ -1169,7 +1169,7 @@ body {
 }
 
 .activity-card {
-  flex: 0 0 320px;
+  flex: 0 0 400px;
   scroll-snap-align: start;
   background: rgba(15, 15, 46, .8);
   padding: 1.5rem;
@@ -1230,14 +1230,14 @@ body {
 
 .activity-title {
   font-family: var(--font-pixel);
-  font-size: .65rem;
+  font-size: .85rem;
   color: var(--text);
   margin-bottom: .6rem;
 }
 
 .activity-desc {
   font-family: var(--font-vt);
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   color: var(--text-dim);
   margin-bottom: 1rem;
   flex: 1;

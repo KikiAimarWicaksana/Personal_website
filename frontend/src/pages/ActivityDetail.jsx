@@ -41,8 +41,8 @@ export default function ActivityDetail() {
       <div className="section-container">
         <button className="pixel-btn-sm" style={{ marginBottom: '2rem' }} onClick={() => navigate(-1)}>◀ BACK</button>
         
-        <div className="activity-detail-content pixel-border" style={{ background: 'rgba(15,15,46,.9)', padding: '3rem', textAlign: 'center' }}>
-          <div className="timeline-marker" style={{ width: '120px', height: '120px', fontSize: '4rem', margin: '0 auto 2rem', border: '4px solid var(--primary)', background: 'var(--bg2)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 0 30px rgba(0,255,136,.4), 6px 6px 0 #000' }}>
+        <div className="activity-detail-content pixel-border" style={{ background: 'rgba(15,15,46,.9)', padding: '3rem', textAlign: 'left' }}>
+          <div className="timeline-marker" style={{ width: '120px', height: '120px', fontSize: '4rem', margin: '0 0 2rem', border: '4px solid var(--primary)', background: 'var(--bg2)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 0 30px rgba(0,255,136,.4), 6px 6px 0 #000' }}>
             <span>{activity.icon}</span>
           </div>
           
@@ -50,9 +50,9 @@ export default function ActivityDetail() {
           
           <h1 style={{ fontFamily: 'var(--font-pixel)', fontSize: '1.4rem', color: 'var(--text)', marginBottom: '1.5rem' }}>{activity.title}</h1>
           {activity.image && (
-            <img src={activity.image.startsWith('http') ? activity.image : `${API_URL}/uploads/${activity.image}`} alt={activity.title} style={{ width: '100%', maxWidth: '500px', height: 'auto', objectFit: 'cover', margin: '0 auto 2rem', display: 'block', border: '4px solid var(--bg)', boxShadow: '0 0 0 2px var(--secondary)' }} />
+            <img src={activity.image.startsWith('http') ? activity.image : `${API_URL}/uploads/${activity.image}`} alt={activity.title} style={{ width: '100%', maxWidth: '500px', height: 'auto', objectFit: 'cover', margin: '0 0 2rem', display: 'block', border: '4px solid var(--bg)', boxShadow: '0 0 0 2px var(--secondary)' }} />
           )}
-          <p style={{ fontFamily: 'var(--font-vt)', fontSize: '1.8rem', color: 'var(--text-dim)', maxWidth: '600px', margin: '0 auto 3rem', lineHeight: '1.6', whiteSpace: 'pre-wrap' }}>{activity.desc}</p>
+          <p style={{ fontFamily: 'var(--font-vt)', fontSize: '1.8rem', color: 'var(--text-dim)', maxWidth: '800px', margin: '0 0 3rem', lineHeight: '1.6', whiteSpace: 'pre-wrap' }}>{activity.desc}</p>
           
           <div className="timeline-badge" style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
             <span className="badge-xp" style={{ fontSize: '.7rem', padding: '.6rem 1.2rem' }}>+{activity.xp} XP</span>
