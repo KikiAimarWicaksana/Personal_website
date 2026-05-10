@@ -1030,7 +1030,7 @@ body {
   color: var(--primary);
   margin-bottom: .8rem;
   line-height: 1.8;
-  height: 4.5rem; /* Increased height for larger line-height */
+  height: 5rem; /* Increased height for 3 lines (0.9 * 1.8 * 3 = 4.86) */
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
@@ -1047,7 +1047,7 @@ body {
   -webkit-line-clamp: 2; /* Limit to 2 lines for even cleaner look */
   -webkit-box-orient: vertical;
   overflow: hidden;
-  height: 4.2rem; /* Fixed height */
+  height: 4.8rem; /* Fixed height for 2 lines (1.6 * 1.5 * 2 = 4.8) */
 }
 
 .read-more {
