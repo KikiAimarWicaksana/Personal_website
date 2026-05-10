@@ -45,7 +45,8 @@ async function initDB() {
         xp INT NOT NULL,
         demo VARCHAR(255),
         code VARCHAR(255),
-        image VARCHAR(255)
+        image VARCHAR(255),
+        year VARCHAR(100)
       )
     `);
 
@@ -53,7 +54,7 @@ async function initDB() {
     await pool.query(`
       CREATE TABLE IF NOT EXISTS activities (
         id INT AUTO_INCREMENT PRIMARY KEY,
-        year VARCHAR(10) NOT NULL,
+        year VARCHAR(100) NOT NULL,
         icon VARCHAR(50) NOT NULL,
         title VARCHAR(255) NOT NULL,
         \`desc\` TEXT NOT NULL,
