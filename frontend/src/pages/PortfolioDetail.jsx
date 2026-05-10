@@ -41,26 +41,26 @@ export default function PortfolioDetail() {
       <div className="section-container">
         <button className="pixel-btn-sm" style={{ marginBottom: '2rem' }} onClick={() => navigate(-1)}>◀ BACK</button>
         
-        <div className="project-detail-content pixel-border" style={{ background: 'rgba(15,15,46,.9)', padding: '2rem' }}>
-          <div className="detail-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '2rem', borderBottom: '2px solid rgba(0,255,136,.2)', paddingBottom: '1rem' }}>
+        <div className="project-detail-content pixel-border" style={{ background: 'rgba(15,15,46,.9)', padding: '1.5rem' }}>
+          <div className="detail-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1.5rem', borderBottom: '2px solid rgba(0,255,136,.2)', paddingBottom: '1rem' }}>
             <div>
               <div className="project-badge" style={{ fontSize: '.5rem', padding: '.4rem .8rem', marginBottom: '1rem' }}>{project.category.toUpperCase()} {project.year && `• ${project.year}`}</div>
-              <h1 style={{ fontFamily: 'var(--font-pixel)', fontSize: '1.2rem', color: 'var(--primary)', marginBottom: '1rem' }}>{project.title}</h1>
-              <p style={{ fontFamily: 'var(--font-vt)', fontSize: '1.6rem', color: 'var(--text-dim)', whiteSpace: 'pre-wrap' }}>{project.desc}</p>
+              <h1 style={{ fontFamily: 'var(--font-pixel)', fontSize: '1rem', color: 'var(--primary)', marginBottom: '1rem' }}>{project.title}</h1>
+              <p style={{ fontFamily: 'var(--font-vt)', fontSize: '1.4rem', color: 'var(--text-dim)', whiteSpace: 'pre-wrap' }}>{project.desc}</p>
             </div>
-            <div className="project-xp" style={{ position: 'relative', fontSize: '.6rem', padding: '.4rem .8rem', top: 0, right: 0 }}>+{project.xp} XP</div>
+            <div className="project-xp" style={{ position: 'relative', fontSize: '.5rem', padding: '.3rem .6rem', top: 0, right: 0 }}>+{project.xp} XP</div>
           </div>
           
-          <div className="project-image pixel-border-sm" style={{ height: '400px', marginBottom: '2rem' }}>
+          <div className="project-image pixel-border-sm" style={{ height: '250px', marginBottom: '1.5rem' }}>
             <div className="project-placeholder" style={project.image ? { backgroundImage: `url(${project.image.startsWith('http') ? project.image : `${API_URL}/uploads/${project.image}`})`, backgroundSize: 'cover', backgroundPosition: 'center', height: '100%' } : { background: `linear-gradient(135deg, ${project.color})`, height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              {!project.image && <span style={{ fontSize: '6rem' }}>{project.icon}</span>}
+              {!project.image && <span style={{ fontSize: '4rem' }}>{project.icon}</span>}
             </div>
           </div>
 
-          <div style={{ marginBottom: '2rem' }}>
-            <h3 style={{ fontFamily: 'var(--font-pixel)', fontSize: '.7rem', color: 'var(--accent)', marginBottom: '1rem' }}>TECHNOLOGIES USED:</h3>
-            <div className="project-tech" style={{ gap: '.8rem' }}>
-              {project.tech.map(t => <span className="tech-tag" style={{ fontSize: '.6rem', padding: '.4rem .8rem' }} key={t}>{t}</span>)}
+          <div style={{ marginBottom: '1rem' }}>
+            <h3 style={{ fontFamily: 'var(--font-pixel)', fontSize: '.6rem', color: 'var(--accent)', marginBottom: '.5rem' }}>TECHNOLOGIES:</h3>
+            <div className="project-tech" style={{ gap: '.5rem' }}>
+              {project.tech.map(t => <span className="tech-tag" style={{ fontSize: '.5rem', padding: '.3rem .6rem' }} key={t}>{t}</span>)}
             </div>
           </div>
 

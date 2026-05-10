@@ -41,22 +41,36 @@ export default function ActivityDetail() {
       <div className="section-container">
         <button className="pixel-btn-sm" style={{ marginBottom: '2rem' }} onClick={() => navigate(-1)}>◀ BACK</button>
         
-        <div className="activity-detail-content pixel-border" style={{ background: 'rgba(15,15,46,.9)', padding: '3rem', textAlign: 'left' }}>
-          <div className="timeline-marker" style={{ width: '120px', height: '120px', fontSize: '4rem', margin: '0 0 2rem', border: '4px solid var(--primary)', background: 'var(--bg2)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 0 30px rgba(0,255,136,.4), 6px 6px 0 #000' }}>
-            <span>{activity.icon}</span>
-          </div>
-          
-          <div className="timeline-date pixel-border-sm" style={{ fontSize: '.7rem', padding: '.4rem 1rem', display: 'inline-block', marginBottom: '1.5rem' }}>{activity.year}</div>
-          
-          <h1 style={{ fontFamily: 'var(--font-pixel)', fontSize: '1.4rem', color: 'var(--text)', marginBottom: '1.5rem' }}>{activity.title}</h1>
-          {activity.image && (
-            <img src={activity.image.startsWith('http') ? activity.image : `${API_URL}/uploads/${activity.image}`} alt={activity.title} style={{ width: '100%', maxWidth: '500px', height: 'auto', objectFit: 'cover', margin: '0 0 2rem', display: 'block', border: '4px solid var(--bg)', boxShadow: '0 0 0 2px var(--secondary)' }} />
-          )}
-          <p style={{ fontFamily: 'var(--font-vt)', fontSize: '1.8rem', color: 'var(--text-dim)', maxWidth: '800px', margin: '0 0 3rem', lineHeight: '1.6', whiteSpace: 'pre-wrap' }}>{activity.desc}</p>
-          
-          <div className="timeline-badge" style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <span className="badge-xp" style={{ fontSize: '.7rem', padding: '.6rem 1.2rem' }}>+{activity.xp} XP</span>
-            <span className="badge-achievement" style={{ fontSize: '.7rem', padding: '.6rem 1.2rem' }}>🏆 {activity.badge} UNLOCKED</span>
+        <div className="activity-detail-content pixel-border" style={{ background: 'rgba(15,15,46,.9)', padding: '1.5rem', textAlign: 'left' }}>
+          <div style={{ display: 'flex', gap: '2rem', flexWrap: 'wrap', alignItems: 'flex-start' }}>
+            <div style={{ flex: '0 0 auto', textAlign: 'center' }}>
+              <div className="timeline-marker" style={{ width: '80px', height: '80px', fontSize: '2.5rem', margin: '0 auto 1rem', border: '3px solid var(--primary)', background: 'var(--bg2)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 0 15px rgba(0,255,136,.3), 4px 4px 0 #000' }}>
+                <span>{activity.icon}</span>
+              </div>
+              <div className="timeline-date pixel-border-sm" style={{ fontSize: '.6rem', padding: '.3rem .7rem', display: 'inline-block', marginBottom: '1rem' }}>{activity.year}</div>
+            </div>
+
+            <div style={{ flex: '1 1 300px' }}>
+              <h1 style={{ fontFamily: 'var(--font-pixel)', fontSize: '1rem', color: 'var(--text)', marginBottom: '1rem', lineHeight: '1.4' }}>{activity.title}</h1>
+              
+              <div style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap' }}>
+                {activity.image && (
+                  <img 
+                    src={activity.image.startsWith('http') ? activity.image : `${API_URL}/uploads/${activity.image}`} 
+                    alt={activity.title} 
+                    style={{ width: '100%', maxWidth: '350px', maxHeight: '250px', objectFit: 'cover', border: '3px solid var(--bg)', boxShadow: '0 0 0 2px var(--secondary)', marginBottom: '1rem' }} 
+                  />
+                )}
+                <div style={{ flex: '1 1 300px' }}>
+                  <p style={{ fontFamily: 'var(--font-vt)', fontSize: '1.4rem', color: 'var(--text-dim)', lineHeight: '1.5', whiteSpace: 'pre-wrap', marginBottom: '1.5rem' }}>{activity.desc}</p>
+                  
+                  <div className="timeline-badge" style={{ display: 'flex', gap: '.8rem', justifyContent: 'flex-start', flexWrap: 'wrap' }}>
+                    <span className="badge-xp" style={{ fontSize: '.5rem', padding: '.4rem .8rem' }}>+{activity.xp} XP</span>
+                    <span className="badge-achievement" style={{ fontSize: '.5rem', padding: '.4rem .8rem' }}>🏆 {activity.badge}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
