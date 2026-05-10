@@ -1043,6 +1043,7 @@ body {
   color: var(--text-dim);
   margin-bottom: .5rem;
   line-height: 1.5;
+  text-align: justify;
   display: -webkit-box;
   -webkit-line-clamp: 2; /* Limit to 2 lines for even cleaner look */
   -webkit-box-orient: vertical;
@@ -1241,6 +1242,7 @@ body {
   color: var(--text-dim);
   margin-bottom: 1rem;
   flex: 1;
+  text-align: justify;
 }
 
 .activity-badges {
