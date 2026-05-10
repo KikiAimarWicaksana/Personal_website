@@ -68,11 +68,7 @@ export default function Portfolio() {
                     <p className="project-desc" style={{ whiteSpace: 'pre-wrap' }}>
                       {p.desc && p.desc.length > 150 ? p.desc.substring(0, 150) + '...' : p.desc}
                     </p>
-                    {p.desc && p.desc.length > 150 ? (
-                      <span className="read-more">LEARN MORE ➔</span>
-                    ) : (
-                      <span className="read-more">VIEW QUEST ➔</span>
-                    )}
+                    <span className="read-more">VIEW QUEST ➔</span>
                     <div className="project-tech">
                       {p.tech.map(t => <span className="tech-tag" key={t}>{t}</span>)}
                     </div>
