@@ -63,7 +63,12 @@ export default function Activities({ showToast }) {
                 {act.image && (
                   <img src={act.image.startsWith('http') ? act.image : `${API_URL}/uploads/${act.image}`} alt={act.title} style={{ width: '100%', height: '160px', objectFit: 'cover', marginBottom: '1rem', border: '2px solid var(--text-dim)' }} />
                 )}
-                <p className="activity-desc">{act.desc}</p>
+                <p className="activity-desc" style={{ whiteSpace: 'pre-wrap' }}>
+                  {act.desc && act.desc.length > 150 ? act.desc.substring(0, 150) + '...' : act.desc}
+                </p>
+                {act.desc && act.desc.length > 150 && (
+                  <span className="read-more" style={{ display: 'block', marginBottom: '1rem', color: 'var(--primary)', fontSize: '0.65rem', fontFamily: 'var(--font-pixel)' }}>LEARN MORE ➔</span>
+                )}
                 <div className="activity-badges">
                   <span className="badge-xp">+{act.xp} XP</span>
                   <span className="badge-achievement">🏆 {act.badge}</span>

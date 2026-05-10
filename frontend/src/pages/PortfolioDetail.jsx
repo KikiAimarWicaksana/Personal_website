@@ -46,7 +46,7 @@ export default function PortfolioDetail() {
             <div>
               <div className="project-badge" style={{ fontSize: '.5rem', padding: '.4rem .8rem', marginBottom: '1rem' }}>{project.category.toUpperCase()} {project.year && `• ${project.year}`}</div>
               <h1 style={{ fontFamily: 'var(--font-pixel)', fontSize: '1.2rem', color: 'var(--primary)', marginBottom: '1rem' }}>{project.title}</h1>
-              <p style={{ fontFamily: 'var(--font-vt)', fontSize: '1.6rem', color: 'var(--text-dim)' }}>{project.desc}</p>
+              <p style={{ fontFamily: 'var(--font-vt)', fontSize: '1.6rem', color: 'var(--text-dim)', whiteSpace: 'pre-wrap' }}>{project.desc}</p>
             </div>
             <div className="project-xp" style={{ position: 'relative', fontSize: '.6rem', padding: '.4rem .8rem', top: 0, right: 0 }}>+{project.xp} XP</div>
           </div>
