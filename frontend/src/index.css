@@ -1010,7 +1010,7 @@ body {
 
 .project-badge {
   font-family: var(--font-pixel);
-  font-size: .45rem;
+  font-size: .7rem;
   color: #000;
   background: var(--secondary);
   padding: .3rem .6rem;
@@ -1222,7 +1222,7 @@ body {
 
 .activity-date {
   font-family: var(--font-pixel);
-  font-size: .55rem;
+  font-size: .75rem;
   color: var(--accent);
   padding: .3rem .6rem;
   border: 2px solid var(--accent);
