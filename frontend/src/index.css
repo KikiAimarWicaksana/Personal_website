@@ -1004,7 +1004,7 @@ body {
 }
 
 .project-info {
-  padding: 1.5rem;
+  padding: 1.2rem;
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -1028,11 +1028,11 @@ body {
 
 .project-title {
   font-family: var(--font-pixel);
-  font-size: .9rem;
+  font-size: .75rem;
   color: var(--primary);
-  margin-bottom: .8rem;
-  line-height: 1.8;
-  height: 5rem; /* Increased height for 3 lines (0.9 * 1.8 * 3 = 4.86) */
+  margin-bottom: .6rem;
+  line-height: 1.6;
+  height: 3.6rem; /* Fixed height for 3 lines (0.75 * 1.6 * 3 = 3.6) */
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
@@ -1041,24 +1041,24 @@ body {
 
 .project-desc {
   font-family: var(--font-vt);
-  font-size: 1.6rem;
+  font-size: 1.2rem;
   color: var(--text-dim);
   margin-bottom: .5rem;
-  line-height: 1.5;
+  line-height: 1.4;
   display: -webkit-box;
-  -webkit-line-clamp: 2; /* Limit to 2 lines for even cleaner look */
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  height: 4.8rem; /* Fixed height for 2 lines (1.6 * 1.5 * 2 = 4.8) */
+  height: 5rem; /* Fixed height for 3 lines (1.2 * 1.4 * 3 = 5.04) */
 }
 
 .read-more {
   font-family: var(--font-pixel);
-  font-size: .45rem;
+  font-size: .4rem;
   color: var(--accent);
   text-decoration: none;
   display: block;
-  margin-bottom: 1.2rem;
+  margin-bottom: .8rem;
   transition: color 0.2s;
 }
 
@@ -1070,9 +1070,9 @@ body {
 .project-tech {
   display: flex;
   flex-wrap: wrap;
-  gap: .5rem;
-  margin-bottom: 1.5rem;
-  height: 3.5rem; /* Fixed height for tech tags area */
+  gap: .4rem;
+  margin-bottom: 1rem;
+  height: 2.5rem; /* Fixed height for tech tags area */
   overflow: hidden;
   align-content: flex-start;
 }
@@ -1171,10 +1171,10 @@ body {
 }
 
 .activity-card {
-  flex: 0 0 400px;
+  flex: 0 0 300px;
   scroll-snap-align: start;
   background: rgba(15, 15, 46, .8);
-  padding: 1.5rem;
+  padding: 1.2rem;
   border: 3px solid rgba(0, 255, 136, .3);
   display: flex;
   flex-direction: column;
@@ -1204,14 +1204,14 @@ body {
 }
 
 .activity-icon {
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   background: var(--bg);
   border: 2px solid var(--primary);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   box-shadow: 2px 2px 0 #000;
   transition: transform .3s, box-shadow .3s;
 }
@@ -1223,20 +1223,20 @@ body {
 
 .activity-date {
   font-family: var(--font-pixel);
-  font-size: .55rem;
+  font-size: .45rem;
   color: var(--accent);
-  padding: .3rem .6rem;
+  padding: .2rem .5rem;
   border: 2px solid var(--accent);
   box-shadow: 2px 2px 0 #000;
 }
 
 .activity-title {
   font-family: var(--font-pixel);
-  font-size: .85rem;
+  font-size: .75rem;
   color: var(--text);
-  margin-bottom: .6rem;
-  line-height: 1.8;
-  height: 3.1rem; /* Fixed height for 2 lines (0.85 * 1.8 * 2 = 3.06) */
+  margin-bottom: .5rem;
+  line-height: 1.6;
+  height: 2.4rem; /* Fixed height for 2 lines (0.75 * 1.6 * 2 = 2.4) */
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -1245,9 +1245,15 @@ body {
 
 .activity-desc {
   font-family: var(--font-vt);
-  font-size: 1.6rem;
+  font-size: 1.2rem;
   color: var(--text-dim);
-  margin-bottom: 1rem;
+  margin-bottom: .8rem;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  height: 5rem; /* Fixed height for 3 lines (1.2 * 1.4 * 3 = 5.04) */
   flex: 1;
 }
 
