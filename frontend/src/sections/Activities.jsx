@@ -61,7 +61,7 @@ export default function Activities({ showToast }) {
                 </div>
                 <h3 className="activity-title">{act.title}</h3>
                 {act.image && (
-                  <img src={act.image.startsWith('http') ? act.image : `${API_URL}/uploads/${act.image}`} alt={act.title} style={{ width: '100%', height: '160px', objectFit: 'cover', marginBottom: '1rem', border: '2px solid var(--text-dim)' }} />
+                  <img src={act.image.startsWith('http') ? act.image : `${API_URL}/uploads/${act.image}`} alt={act.title} style={{ width: '100%', height: '120px', objectFit: 'cover', marginBottom: '.8rem', border: '2px solid var(--text-dim)' }} />
                 )}
                 <p className="activity-desc" style={{ whiteSpace: 'pre-wrap' }}>
                   {act.desc && act.desc.length > 150 ? act.desc.substring(0, 150) + '...' : act.desc}

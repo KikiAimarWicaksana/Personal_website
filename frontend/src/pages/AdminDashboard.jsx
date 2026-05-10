@@ -1,6 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import API_URL from '../config';
+import Cropper from 'react-easy-crop';
+import { getCroppedImg } from '../utils/cropImage';
 
 export default function AdminDashboard() {
   const navigate = useNavigate();
@@ -14,6 +16,14 @@ export default function AdminDashboard() {
   const [actForm, setActForm] = useState({ year: '2024', icon: '🏆', title: '', desc: '', xp: 100, badge: '' });
   const [actImage, setActImage] = useState(null);
   const [editId, setEditId] = useState(null);
+
+  // Cropper State
+  const [imageSrc, setImageSrc] = useState(null);
+  const [crop, setCrop] = useState({ x: 0, y: 0 });
+  const [zoom, setZoom] = useState(1);
+  const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
+  const [cropTarget, setCropTarget] = useState(null); // 'portfolio' or 'activities'
+  const [previewUrl, setPreviewUrl] = useState(null);
 
   const token = localStorage.getItem('adminToken');
 
@@ -91,8 +101,50 @@ export default function AdminDashboard() {
     setActForm({ year: '2024', icon: '🏆', title: '', desc: '', xp: 100, badge: '' });
     setPortImage(null);
     setActImage(null);
+    setPreviewUrl(null);
     if (document.getElementById('portFile')) document.getElementById('portFile').value = "";
     if (document.getElementById('actFile')) document.getElementById('actFile').value = "";
+  };
+
+  const onFileChange = async (e, target) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const file = e.target.files[0];
+      let imageDataUrl = await readFile(file);
+      setImageSrc(imageDataUrl);
+      setCropTarget(target);
+    }
+  };
+
+  const readFile = (file) => {
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.addEventListener('load', () => resolve(reader.result), false);
+      reader.readAsDataURL(file);
+    });
+  };
+
+  const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
+    setCroppedAreaPixels(croppedAreaPixels);
+  }, []);
+
+  const handleCropSave = async () => {
+    try {
+      const croppedBlob = await getCroppedImg(imageSrc, croppedAreaPixels);
+      const croppedFile = new File([croppedBlob], "cropped.jpg", { type: "image/jpeg" });
+      const croppedUrl = URL.createObjectURL(croppedBlob);
+      
+      setPreviewUrl(croppedUrl);
+
+      if (cropTarget === 'portfolio') {
+        setPortImage(croppedFile);
+      } else {
+        setActImage(croppedFile);
+      }
+      
+      setImageSrc(null);
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   const handleAddPortfolio = async (e) => {
@@ -229,8 +281,14 @@ export default function AdminDashboard() {
                   </div>
                 </div>
                 <div style={{ background: 'var(--bg2)', padding: '1rem' }} className="pixel-border-sm">
-                  <label style={{ fontFamily: 'var(--font-pixel)', fontSize: '.6rem', color: 'var(--primary)', display: 'block', marginBottom: '.5rem' }}>UPLOAD IMAGE (OPTIONAL)</label>
-                  <input id="portFile" type="file" accept="image/*" onChange={e => setPortImage(e.target.files[0])} style={{ color: 'white', fontFamily: 'var(--font-vt)', fontSize: '1rem' }} />
+                  <label style={{ fontFamily: 'var(--font-pixel)', fontSize: '.6rem', color: 'var(--primary)', display: 'block', marginBottom: '.5rem' }}>UPLOAD IMAGE (CROP PREVIEW)</label>
+                  <input id="portFile" type="file" accept="image/*" onChange={e => onFileChange(e, 'portfolio')} style={{ color: 'white', fontFamily: 'var(--font-vt)', fontSize: '1rem', marginBottom: previewUrl || portForm.existingImage ? '1rem' : '0' }} />
+                  {(previewUrl || portForm.existingImage) && (
+                    <div style={{ marginTop: '1rem' }}>
+                      <p style={{ fontFamily: 'var(--font-pixel)', fontSize: '.5rem', color: 'var(--text-dim)', marginBottom: '.5rem' }}>IMAGE PREVIEW:</p>
+                      <img src={previewUrl || (portForm.existingImage.startsWith('http') ? portForm.existingImage : `${API_URL}/uploads/${portForm.existingImage}`)} alt="Preview" style={{ width: '100%', maxWidth: '300px', aspectRatio: '16/9', objectFit: 'cover', border: '2px solid var(--primary)' }} />
+                    </div>
+                  )}
                 </div>
                 <div style={{ display: 'flex', gap: '1rem' }}>
                   <button type="submit" className="pixel-btn" style={{ flex: 1 }}>{editId ? 'UPDATE' : 'ADD'} PORTFOLIO</button>
@@ -248,8 +306,14 @@ export default function AdminDashboard() {
                   <input className="pixel-input" placeholder="Icon (emoji)" required value={actForm.icon} onChange={e => setActForm({ ...actForm, icon: e.target.value })} />
                 </div>
                 <div style={{ background: 'var(--bg2)', padding: '1rem' }} className="pixel-border-sm">
-                  <label style={{ fontFamily: 'var(--font-pixel)', fontSize: '.6rem', color: 'var(--primary)', display: 'block', marginBottom: '.5rem' }}>UPLOAD IMAGE (OPTIONAL)</label>
-                  <input id="actFile" type="file" accept="image/*" onChange={e => setActImage(e.target.files[0])} style={{ color: 'white', fontFamily: 'var(--font-vt)', fontSize: '1rem' }} />
+                  <label style={{ fontFamily: 'var(--font-pixel)', fontSize: '.6rem', color: 'var(--primary)', display: 'block', marginBottom: '.5rem' }}>UPLOAD IMAGE (CROP PREVIEW)</label>
+                  <input id="actFile" type="file" accept="image/*" onChange={e => onFileChange(e, 'activities')} style={{ color: 'white', fontFamily: 'var(--font-vt)', fontSize: '1rem', marginBottom: previewUrl || actForm.existingImage ? '1rem' : '0' }} />
+                  {(previewUrl || actForm.existingImage) && (
+                    <div style={{ marginTop: '1rem' }}>
+                      <p style={{ fontFamily: 'var(--font-pixel)', fontSize: '.5rem', color: 'var(--text-dim)', marginBottom: '.5rem' }}>IMAGE PREVIEW:</p>
+                      <img src={previewUrl || (actForm.existingImage.startsWith('http') ? actForm.existingImage : `${API_URL}/uploads/${actForm.existingImage}`)} alt="Preview" style={{ width: '100%', maxWidth: '300px', aspectRatio: '16/9', objectFit: 'cover', border: '2px solid var(--primary)' }} />
+                    </div>
+                  )}
                 </div>
                 <div style={{ display: 'flex', gap: '1rem' }}>
                   <button type="submit" className="pixel-btn" style={{ flex: 1 }}>{editId ? 'UPDATE' : 'ADD'} ACTIVITY</button>
@@ -260,6 +324,27 @@ export default function AdminDashboard() {
           </div>
         </div>
       </div>
+
+      {/* Cropper Modal */}
+      {imageSrc && (
+        <div style={{ position: 'fixed', inset: 0, zIndex: 99999, background: 'rgba(0,0,0,0.9)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+          <div style={{ position: 'relative', width: '90vw', height: '60vh', background: '#333' }}>
+            <Cropper
+              image={imageSrc}
+              crop={crop}
+              zoom={zoom}
+              aspect={16 / 9}
+              onCropChange={setCrop}
+              onCropComplete={onCropComplete}
+              onZoomChange={setZoom}
+            />
+          </div>
+          <div style={{ marginTop: '2rem', display: 'flex', gap: '1rem' }}>
+            <button className="pixel-btn" onClick={handleCropSave}>CROP & SAVE</button>
+            <button className="pixel-btn" style={{ borderColor: 'var(--text-dim)', color: 'var(--text-dim)' }} onClick={() => setImageSrc(null)}>CANCEL</button>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
