@@ -1029,8 +1029,8 @@ body {
   font-size: .9rem;
   color: var(--primary);
   margin-bottom: .8rem;
-  line-height: 1.4;
-  height: 3.5rem; /* Increased height */
+  line-height: 1.8;
+  height: 4.5rem; /* Increased height for larger line-height */
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
@@ -1233,6 +1233,7 @@ body {
   font-size: .85rem;
   color: var(--text);
   margin-bottom: .6rem;
+  line-height: 1.8;
 }
 
 .activity-desc {
