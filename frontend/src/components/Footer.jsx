@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Heart, Coffee } from 'lucide-react';
 import API_URL from '../config';
 
 export default function Footer() {
@@ -38,8 +39,10 @@ export default function Footer() {
           ))}
         </div>
         <div className="footer-text">
-          <p>© {new Date().getFullYear()} PIXEL QUEST — Crafted with ❤️ and ☕</p>
-
+          <p>© {new Date().getFullYear()} KIKI AIMAR WICAKSANA — ALL RIGHTS RESERVED</p>
+          <p className="footer-subtext" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', marginTop: '5px' }}>
+            Built with <Heart size={14} color="var(--secondary)" /> and <Coffee size={14} color="var(--accent)" /> in Jakarta
+          </p>
         </div>
         <button className="pixel-btn-sm back-to-top"
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>▲ TOP</button>
