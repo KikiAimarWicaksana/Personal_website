@@ -968,8 +968,7 @@ body {
   position: relative;
   overflow: hidden;
   aspect-ratio: 16/9;
-  margin-bottom: 1.2rem;
-  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
 }
 
 .project-placeholder {
@@ -1067,11 +1066,15 @@ body {
 }
 
 .read-more {
-  display: none; /* Hide in the new layout as per image */
+  display: block;
+  font-family: var(--font-pixel);
+  font-size: .45rem;
+  color: var(--primary);
+  margin-bottom: 1rem;
 }
 
 .project-tech-section {
-  margin: 1.5rem 0;
+  margin: 1rem 0;
 }
 
 .tech-label {
@@ -1102,7 +1105,7 @@ body {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1rem;
-  margin-top: 1rem;
+  margin-top: auto;
 }
 
 .pixel-btn-sm.btn-demo {
@@ -1773,35 +1776,20 @@ body {
     flex-direction: column;
   }
 
-  .project-header {
-    order: 0;
-  }
-
   .project-title {
-    order: 1;
     font-size: 1.2rem;
     margin-bottom: 1.2rem;
   }
 
   .project-desc {
-    order: 2;
     font-size: 1.4rem;
     margin-bottom: 1.5rem;
   }
 
   .project-image {
-    order: 3; /* Move below description */
-    margin: 1.5rem 0;
+    margin-bottom: 1.2rem;
     border: 3px solid #fff;
     box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
-  }
-
-  .project-tech-section {
-    order: 4;
-  }
-
-  .project-links {
-    order: 5;
   }
 
   .about-photo-card {
