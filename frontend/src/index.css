@@ -1032,9 +1032,9 @@ body {
   letter-spacing: 1px;
 }
 
-.project-badge.website { background: var(--secondary); }
-.project-badge.data { background: var(--secondary); }
-.project-badge.cloud { background: var(--cyan); }
+.project-badge.website { background: var(--purple); color: #fff; }
+.project-badge.data { background: var(--secondary); color: #000; }
+.project-badge.cloud { background: var(--cyan); color: #000; }
 
 .project-xp {
   font-family: var(--font-pixel);
