@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Briefcase, ArrowRight, Play, Code } from 'lucide-react';
 
 import API_URL from '../config';
 
@@ -34,7 +33,7 @@ export default function Portfolio() {
       <div className="section-container">
         <div className="section-header">
           <h2 className="section-title pixel-title">
-            <span className="title-icon"><Briefcase size={24} /></span> PORTFOLIO
+            <span className="title-icon">🗡️</span> PORTFOLIO
           </h2>
           <div className="title-underline" />
           <p className="section-subtitle">— QUEST LOG —</p>
@@ -72,9 +71,7 @@ export default function Portfolio() {
                     <p className="project-desc" style={{ whiteSpace: 'pre-wrap' }}>
                       {p.desc && p.desc.length > 150 ? p.desc.substring(0, 150) + '...' : p.desc}
                     </p>
-                    <span className="read-more" style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-                      VIEW QUEST <ArrowRight size={12} />
-                    </span>
+                    <span className="read-more">VIEW QUEST ➔</span>
                     
                     <div className="project-tech-section">
                       <div className="tech-label">TECHNOLOGIES:</div>
@@ -84,12 +81,8 @@ export default function Portfolio() {
                     </div>
 
                     <div className="project-links">
-                      <a href={p.demo} target="_blank" rel="noopener noreferrer" className="pixel-btn-sm btn-demo" onClick={e => e.stopPropagation()} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
-                        <Play size={14} /> PLAY DEMO
-                      </a>
-                      <a href={p.code} target="_blank" rel="noopener noreferrer" className="pixel-btn-sm btn-source" onClick={e => e.stopPropagation()} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
-                        <Code size={14} /> VIEW SOURCE
-                      </a>
+                      <a href={p.demo} target="_blank" rel="noopener noreferrer" className="pixel-btn-sm btn-demo" onClick={e => e.stopPropagation()}>▶ PLAY DEMO</a>
+                      <a href={p.code} target="_blank" rel="noopener noreferrer" className="pixel-btn-sm btn-source" onClick={e => e.stopPropagation()}>{`{ }`} VIEW SOURCE</a>
                     </div>
                   </div>
                 </div>
@@ -97,9 +90,7 @@ export default function Portfolio() {
             </div>
             {!showAll && hasMore && (
               <div style={{ textAlign: 'center', marginTop: '3rem' }}>
-                <button className="pixel-btn" onClick={() => setShowAll(true)} style={{ display: 'inline-flex', alignItems: 'center', gap: '10px' }}>
-                  SHOW ALL <ArrowRight size={18} />
-                </button>
+                <button className="pixel-btn" onClick={() => setShowAll(true)}>SHOW ALL ➔</button>
               </div>
             )}
           </>
