@@ -1,30 +1,15 @@
 import { useEffect, useRef, useState } from 'react';
-import { 
-  User, 
-  Sword, 
-  Database, 
-  Cloud, 
-  Coffee, 
-  Zap, 
-  Server, 
-  RefreshCw, 
-  Cpu, 
-  Award, 
-  Clock, 
-  Shield, 
-  Terminal 
-} from 'lucide-react';
 import API_URL from '../config';
 
 const skills = [
-  { icon: <Terminal size={18} />, name: 'Python', level: 90 },
-  { icon: <Database size={18} />, name: 'SQL & BigQuery', level: 95 },
-  { icon: <Cloud size={18} />, name: 'Google Cloud (GCP)', level: 85 },
-  { icon: <Coffee size={18} />, name: 'Java', level: 75 },
-  { icon: <Zap size={18} />, name: 'Data Pipelines', level: 80 },
-  { icon: <Server size={18} />, name: 'Data Warehousing', level: 85 },
-  { icon: <RefreshCw size={18} />, name: 'ETL / ELT', level: 80 },
-  { icon: <Cpu size={18} />, name: 'Spark / Big Data', level: 70 },
+  { icon: '🐍', name: 'Python', level: 90 },
+  { icon: '📊', name: 'SQL & BigQuery', level: 95 },
+  { icon: '☁️', name: 'Google Cloud (GCP)', level: 85 },
+  { icon: '☕', name: 'Java', level: 75 },
+  { icon: '⚡', name: 'Data Pipelines', level: 80 },
+  { icon: '🗄️', name: 'Data Warehousing', level: 85 },
+  { icon: '⚙️', name: 'ETL / ELT', level: 80 },
+  { icon: '🐘', name: 'Spark / Big Data', level: 70 },
 ];
 
 export default function About() {
@@ -53,9 +38,9 @@ export default function About() {
   }, []);
 
   const stats = [
-    { label: 'Projects', value: projectCount, icon: <Sword size={20} /> },
-    { label: 'Certificates', value: '15+', icon: <Award size={20} /> },
-    { label: 'Experience', value: '2 Yrs', icon: <Clock size={20} /> },
+    { label: 'Projects', value: projectCount, icon: '🗡️' },
+    { label: 'Certificates', value: '15+', icon: '📜' },
+    { label: 'Experience', value: '2 Yrs', icon: '⏳' },
   ];
 
   return (
@@ -63,7 +48,7 @@ export default function About() {
       <div className="section-container">
         <div className="section-header">
           <h2 className="section-title pixel-title">
-            <span className="title-icon"><User size={24} /></span> ABOUT ME
+            <span className="title-icon">👤</span> ABOUT ME
           </h2>
           <div className="title-underline" />
         </div>
@@ -78,7 +63,7 @@ export default function About() {
                 className="about-photo-img"
                 onError={(e) => {
                   e.target.style.display = 'none';
-                  e.target.parentElement.innerHTML = '<div style="font-size:4rem;display:flex;align-items:center;justify-content:center;width:100%;height:100%"><User size={64} /></div>';
+                  e.target.parentElement.innerHTML = '<span style="font-size:4rem;display:flex;align-items:center;justify-content:center;width:100%;height:100%">🧙</span>';
                 }}
               />
             </div>
@@ -109,9 +94,9 @@ export default function About() {
               sambil terus membangun portofolio project yang beragam dan bermanfaat.
             </p>
             <div className="about-bio-tags">
-              <span className="bio-tag"><Cloud size={14} style={{ marginRight: '5px' }} /> Cloud</span>
-              <span className="bio-tag"><Database size={14} style={{ marginRight: '5px' }} /> Data</span>
-              <span className="bio-tag"><Shield size={14} style={{ marginRight: '5px' }} /> Entrepreneur</span>
+              <span className="bio-tag">☁️ Cloud</span>
+              <span className="bio-tag">📊 Data</span>
+              <span className="bio-tag">👨‍💼 Entrepreneur</span>
             </div>
           </div>
         </div>
@@ -119,9 +104,7 @@ export default function About() {
         {/* Bottom Row: Skills */}
         <div className="about-skills-section" ref={skillsRef}>
           <div className="about-skills-header">
-            <span className="about-skills-title" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <Shield size={18} /> SKILLS & ABILITIES
-            </span>
+            <span className="about-skills-title">⚔️ SKILLS & ABILITIES</span>
           </div>
           <div className="about-skills-grid">
             {skills.map(s => (
