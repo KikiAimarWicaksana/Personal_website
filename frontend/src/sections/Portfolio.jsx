@@ -55,14 +55,15 @@ export default function Portfolio() {
             <div className="portfolio-grid">
               {displayed.map(p => (
                 <div className="project-card pixel-border" key={p.id} onClick={() => navigate(`/portfolio/${p.id}`)} style={{ cursor: 'pointer' }}>
-                  <div className="project-info">
-                    <div className="project-image">
-                      <div className="project-placeholder"
-                        style={p.image ? { backgroundImage: `url(${p.image.startsWith('http') ? p.image : `${API_URL}/uploads/${p.image}`})`, backgroundSize: 'cover', backgroundPosition: 'center' } : { background: `linear-gradient(135deg, ${p.color})` }}>
-                        {!p.image && <span className="placeholder-icon">{p.icon}</span>}
-                      </div>
-                      <div className="project-overlay"><span className="overlay-text">VIEW QUEST</span></div>
+                  <div className="project-image">
+                    <div className="project-placeholder"
+                      style={p.image ? { backgroundImage: `url(${p.image.startsWith('http') ? p.image : `${API_URL}/uploads/${p.image}`})`, backgroundSize: 'contain', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' } : { background: `linear-gradient(135deg, ${p.color})` }}>
+                      {!p.image && <span className="placeholder-icon">{p.icon}</span>}
                     </div>
+                    <div className="project-overlay"><span className="overlay-text">VIEW QUEST</span></div>
+                  </div>
+                  
+                  <div className="project-info">
                     <div className="project-header">
                       <div className={`project-badge ${p.category.toLowerCase()}`}>{p.category.toUpperCase()} {p.year && `• ${p.year}`}</div>
                       <div className="project-xp">+{p.xp} XP</div>

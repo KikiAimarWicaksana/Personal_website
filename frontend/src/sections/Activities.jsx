@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Trophy, ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
 import API_URL from '../config';
 
 export default function Activities({ showToast }) {
@@ -41,21 +42,21 @@ export default function Activities({ showToast }) {
       <div className="section-container">
         <div className="section-header">
           <h2 className="section-title pixel-title">
-            <span className="title-icon">🏆</span> ACTIVITIES
+            <span className="title-icon"><Trophy size={24} /></span> ACTIVITIES
           </h2>
           <div className="title-underline" />
           <p className="section-subtitle">— ACHIEVEMENT LOG —</p>
         </div>
         
         <div className="carousel-wrapper">
-          <button className="carousel-btn left" onClick={scrollLeft}>{'<'}</button>
+          <button className="carousel-btn left" onClick={scrollLeft}><ChevronLeft size={24} /></button>
           
           <div className="activities-grid" ref={gridRef}>
             {items.slice(0, 6).map((act, i) => (
               <div className="activity-card pixel-border" key={act.id} ref={el => refs.current[i] = el} onClick={() => navigate(`/activities/${act.id}`)}>
                 <div className="activity-header">
                   <div className="activity-icon">
-                    <span>{act.icon}</span>
+                    {act.icon && (act.icon.length > 2 ? <span style={{fontSize: '1rem'}}>{act.icon}</span> : <span>{act.icon}</span>)}
                   </div>
                   <div className="activity-date pixel-border-sm">{act.year}</div>
                 </div>
@@ -67,21 +68,27 @@ export default function Activities({ showToast }) {
                   {act.desc && act.desc.length > 150 ? act.desc.substring(0, 150) + '...' : act.desc}
                 </p>
                 {act.desc && act.desc.length > 150 && (
-                  <span className="read-more" style={{ display: 'block', marginBottom: '1rem', color: 'var(--primary)', fontSize: '0.65rem', fontFamily: 'var(--font-pixel)' }}>LEARN MORE ➔</span>
+                  <span className="read-more" style={{ display: 'flex', alignItems: 'center', gap: '5px', marginBottom: '1rem', color: 'var(--primary)', fontSize: '0.65rem', fontFamily: 'var(--font-pixel)' }}>
+                    LEARN MORE <ArrowRight size={12} />
+                  </span>
                 )}
                 <div className="activity-badges">
                   <span className="badge-xp">+{act.xp} XP</span>
-                  <span className="badge-achievement">🏆 {act.badge}</span>
+                  <span className="badge-achievement" style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+                    <Trophy size={12} /> {act.badge}
+                  </span>
                 </div>
               </div>
             ))}
           </div>
           
-          <button className="carousel-btn right" onClick={scrollRight}>{'>'}</button>
+          <button className="carousel-btn right" onClick={scrollRight}><ChevronRight size={24} /></button>
         </div>
 
         <div style={{ textAlign: 'center', marginTop: '3rem' }}>
-          <button className="pixel-btn" onClick={() => navigate('/activities')}>SHOW ALL ➔</button>
+          <button className="pixel-btn" onClick={() => navigate('/activities')} style={{ display: 'inline-flex', alignItems: 'center', gap: '10px' }}>
+            SHOW ALL <ArrowRight size={18} />
+          </button>
         </div>
       </div>
     </section>

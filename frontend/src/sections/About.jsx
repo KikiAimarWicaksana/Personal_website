@@ -96,7 +96,7 @@ export default function About() {
             <div className="about-bio-tags">
               <span className="bio-tag">☁️ Cloud</span>
               <span className="bio-tag">📊 Data</span>
-              <span className="bio-tag">👨‍💼 Entreprepreneur</span>
+              <span className="bio-tag">👨‍💼 Entrepreneur</span>
             </div>
           </div>
         </div>
