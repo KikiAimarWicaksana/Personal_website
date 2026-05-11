@@ -55,29 +55,36 @@ export default function Portfolio() {
             <div className="portfolio-grid">
               {displayed.map(p => (
                 <div className="project-card pixel-border" key={p.id} onClick={() => navigate(`/portfolio/${p.id}`)} style={{ cursor: 'pointer' }}>
-                  <div className="project-image">
-                    <div className="project-placeholder"
-                      style={p.image ? { backgroundImage: `url(${p.image.startsWith('http') ? p.image : `${API_URL}/uploads/${p.image}`})`, backgroundSize: 'cover', backgroundPosition: 'center' } : { background: `linear-gradient(135deg, ${p.color})` }}>
-                      {!p.image && <span className="placeholder-icon">{p.icon}</span>}
-                    </div>
-                    <div className="project-overlay"><span className="overlay-text">VIEW QUEST</span></div>
-                  </div>
                   <div className="project-info">
-                    <div className={`project-badge ${p.category.toLowerCase()}`}>{p.category.toUpperCase()} {p.year && `• ${p.year}`}</div>
+                    <div className="project-image">
+                      <div className="project-placeholder"
+                        style={p.image ? { backgroundImage: `url(${p.image.startsWith('http') ? p.image : `${API_URL}/uploads/${p.image}`})`, backgroundSize: 'cover', backgroundPosition: 'center' } : { background: `linear-gradient(135deg, ${p.color})` }}>
+                        {!p.image && <span className="placeholder-icon">{p.icon}</span>}
+                      </div>
+                      <div className="project-overlay"><span className="overlay-text">VIEW QUEST</span></div>
+                    </div>
+                    <div className="project-header">
+                      <div className={`project-badge ${p.category.toLowerCase()}`}>{p.category.toUpperCase()} {p.year && `• ${p.year}`}</div>
+                      <div className="project-xp">+{p.xp} XP</div>
+                    </div>
                     <h3 className="project-title">{p.title}</h3>
                     <p className="project-desc" style={{ whiteSpace: 'pre-wrap' }}>
                       {p.desc && p.desc.length > 150 ? p.desc.substring(0, 150) + '...' : p.desc}
                     </p>
                     <span className="read-more">VIEW QUEST ➔</span>
-                    <div className="project-tech">
-                      {p.tech.map(t => <span className="tech-tag" key={t}>{t}</span>)}
+                    
+                    <div className="project-tech-section">
+                      <div className="tech-label">TECHNOLOGIES:</div>
+                      <div className="project-tech">
+                        {p.tech.map(t => <span className="tech-tag" key={t}>{t}</span>)}
+                      </div>
                     </div>
+
                     <div className="project-links">
-                      <a href={p.demo} target="_blank" rel="noopener noreferrer" className="pixel-btn-sm" onClick={e => e.stopPropagation()}>DEMO</a>
-                      <a href={p.code} target="_blank" rel="noopener noreferrer" className="pixel-btn-sm" onClick={e => e.stopPropagation()}>CODE</a>
+                      <a href={p.demo} target="_blank" rel="noopener noreferrer" className="pixel-btn-sm btn-demo" onClick={e => e.stopPropagation()}>▶ PLAY DEMO</a>
+                      <a href={p.code} target="_blank" rel="noopener noreferrer" className="pixel-btn-sm btn-source" onClick={e => e.stopPropagation()}>{`{ }`} VIEW SOURCE</a>
                     </div>
                   </div>
-                  <div className="project-xp">+{p.xp} XP</div>
                 </div>
               ))}
             </div>
