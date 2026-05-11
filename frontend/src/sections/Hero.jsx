@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
+import { ArrowRight } from 'lucide-react';
 
-const TEXTS = ['Full-Stack Developer', 'UI/UX Enthusiast', 'Pixel Art Lover', 'Quest Seeker 🗡️'];
+const TEXTS = ['Full-Stack Developer', 'UI/UX Enthusiast', 'Pixel Art Lover', 'Quest Seeker'];
 
 export default function Hero() {
   return (
@@ -36,12 +37,13 @@ export default function Hero() {
           </p>
           <div className="hero-actions">
             <a href="#portfolio" className="pixel-btn"
-              onClick={e => { e.preventDefault(); document.getElementById('portfolio')?.scrollIntoView({ behavior: 'smooth' }); }}>
-              Lihat Proyek ➔
+              onClick={e => { e.preventDefault(); document.getElementById('portfolio')?.scrollIntoView({ behavior: 'smooth' }); }}
+              style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+              Lihat Proyek <ArrowRight size={18} />
             </a>
             <a href="#contact" className="pixel-btn secondary"
               onClick={e => { e.preventDefault(); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); }}
-              style={{ background: 'transparent', border: '2px solid var(--text-dim)', color: 'var(--text)' }}>
+              style={{ background: 'transparent', border: '2px solid var(--text-dim)', color: 'var(--text)', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
               Kontak Saya
             </a>
           </div>
