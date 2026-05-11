@@ -58,7 +58,7 @@ export default function Portfolio() {
                   <div className="project-info">
                     <div className="project-image">
                       <div className="project-placeholder"
-                        style={p.image ? { backgroundImage: `url(${p.image.startsWith('http') ? p.image : `${API_URL}/uploads/${p.image}`})`, backgroundSize: 'cover', backgroundPosition: 'center' } : { background: `linear-gradient(135deg, ${p.color})` }}>
+                        style={p.image ? { backgroundImage: `url(${p.image.startsWith('http') ? p.image : `${API_URL}/uploads/${p.image}`})`, backgroundSize: 'contain', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' } : { background: `linear-gradient(135deg, ${p.color})` }}>
                         {!p.image && <span className="placeholder-icon">{p.icon}</span>}
                       </div>
                       <div className="project-overlay"><span className="overlay-text">VIEW QUEST</span></div>

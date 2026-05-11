@@ -51,8 +51,8 @@ export default function PortfolioDetail() {
             <div className="project-xp" style={{ position: 'relative', fontSize: '.5rem', padding: '.3rem .6rem', top: 0, right: 0 }}>+{project.xp} XP</div>
           </div>
           
-          <div className="project-image pixel-border-sm" style={{ height: '250px', marginBottom: '1.5rem' }}>
-            <div className="project-placeholder" style={project.image ? { backgroundImage: `url(${project.image.startsWith('http') ? project.image : `${API_URL}/uploads/${project.image}`})`, backgroundSize: 'cover', backgroundPosition: 'center', height: '100%' } : { background: `linear-gradient(135deg, ${project.color})`, height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <div className="project-image pixel-border-sm" style={{ width: '100%', aspectRatio: '16/9', marginBottom: '1.5rem', overflow: 'hidden' }}>
+            <div className="project-placeholder" style={project.image ? { backgroundImage: `url(${project.image.startsWith('http') ? project.image : `${API_URL}/uploads/${project.image}`})`, backgroundSize: 'contain', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', height: '100%', width: '100%' } : { background: `linear-gradient(135deg, ${project.color})`, height: '100%', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               {!project.image && <span style={{ fontSize: '4rem' }}>{project.icon}</span>}
             </div>
           </div>

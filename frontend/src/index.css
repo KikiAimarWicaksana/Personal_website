@@ -978,6 +978,9 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  background-size: contain !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
 }
 
 .placeholder-icon {
